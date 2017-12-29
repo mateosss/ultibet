@@ -39,10 +39,8 @@ public class PlayerAttack : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Enemy") Debug.Log("TRIGGEEEERED");
         if (timer > 0)
         {
-            Debug.Log(">0");
             EnemyHealth enemy = other.GetComponent<EnemyHealth>();
             if (enemy != null) enemy.Death();
         }
