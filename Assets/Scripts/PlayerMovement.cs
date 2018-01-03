@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float speed = 0.1f;
     public float jump = 30f;
-    public float range = 0.1f;
+    public float range = 0.5f;
     public GameObject pathNodeDisplay;
     public float fallMultiplier = 2.5f;
     public float lowJumpMultiplier = 2f;
@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
     Vector3 targetLocation;
     PlayerAnimation playerAnimation;
     float camRayLength = 100f;
-    int floorMask;
+    int touchableLayer;
     bool onGround = false;
     List<GameObject> path = new List<GameObject>();
     int pathStep = 0;
@@ -31,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         playerAnimation = GetComponent<PlayerAnimation>();
         cam = Camera.main;
-        floorMask = LayerMask.GetMask("Floor");
+        touchableLayer = LayerMask.GetMask("Node");
     }
 
     private void Start()
@@ -47,7 +47,11 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Fire1") && !isRunning)
         {
-            AddToPath(MouseToPoint());
+            GameObject node = NodeTouchedByMouse();
+            if (node)
+            {
+                AddToPath(node.transform.position);
+            }
         }
 
         if (Input.GetButtonDown("Fire2") && !isRunning)
@@ -161,8 +165,17 @@ public class PlayerMovement : MonoBehaviour
     {
         Ray camRay = cam.ScreenPointToRay(Input.mousePosition);
         RaycastHit floorHit;
-        Physics.Raycast(camRay, out floorHit, camRayLength, floorMask);
+        Physics.Raycast(camRay, out floorHit, camRayLength, touchableLayer);
         return floorHit.point;
+    }
+
+    GameObject NodeTouchedByMouse()
+    {
+        Ray camRay = cam.ScreenPointToRay(Input.mousePosition);
+        RaycastHit floorHit;
+        Physics.Raycast(camRay, out floorHit, camRayLength, touchableLayer);
+        if (!floorHit.collider) return null;
+        return floorHit.collider.gameObject;
     }
 
     float DistanceFromTop(Vector3 p0, Vector3 p1)
