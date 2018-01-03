@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float speed = 0.1f;
     public float jump = 30f;
-    public float range = 0.5f;
+    public float range = 0f;
     public GameObject pathNodeDisplay;
     public float fallMultiplier = 2.5f;
     public float lowJumpMultiplier = 2f;
@@ -24,6 +24,10 @@ public class PlayerMovement : MonoBehaviour
     bool onGround = false;
     List<GameObject> path = new List<GameObject>();
     int pathStep = 0;
+
+    public float dashDuration = 0.2f;
+    float dashDistance = 0f;
+    float dashTimer = 0f;
 
     void Awake()
     {
@@ -64,13 +68,16 @@ public class PlayerMovement : MonoBehaviour
             Jump();
         }
 
+        //if (DistanceFromTop(targetLocation, player.position) > range)
         if (DistanceFromTop(targetLocation, player.position) > range)
         {
-            Move();
+            //Move();
+            DashMove();
         }
         else if (pathStep <= path.Count && isRunning)
         {
             StartPath();
+            dashTimer = 0f;
         }
         else
         {
@@ -81,6 +88,25 @@ public class PlayerMovement : MonoBehaviour
     void Move()
     {
         player.Translate(Vector3.forward * speed);
+    }
+
+    void DashMove()
+    {
+        Vector3 target = GetWithDefaultY(targetLocation);
+        if (dashTimer == 0)
+        {
+            dashDistance = DistanceFromTop(target, player.position);
+            Debug.Log(dashDistance);
+            if (pathStep >= path.Count - 1) playerAnimation.Dash();
+        }
+        dashTimer += Time.deltaTime;
+        player.position += (target - player.position) * (dashTimer / dashDuration);
+        //if (dashTimer >= dashDuration)
+        //{
+        //    dashTimer = 0;
+        //    Debug.Log("AM HERE");
+        //    player.position = target;
+        //}
     }
 
     void Jump()
