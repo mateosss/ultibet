@@ -76,7 +76,7 @@ GameObject:
   - component: {fileID: 33274622248768292}
   - component: {fileID: 23454678677049372}
   - component: {fileID: 64929150640016492}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: wavy
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 33028658800436344}
   - component: {fileID: 64350271391937828}
   - component: {fileID: 23890088565817870}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: PlatformCylinder1x1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

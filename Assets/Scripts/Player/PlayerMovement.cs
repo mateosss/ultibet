@@ -5,28 +5,32 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
 
-
     [Header("Movement")]
-    public float speed = 0.1f;
-    public float jump = 30f;
+    public float speed = 4f;
+    public float jump = 25f;
+    public float jumpAttackAirPause = 0.2f;
 
     [Header("Advanced")]
     public float nodeContactThreshold = 0.5f;
     public GameObject pathNodeDisplay;
+    public int maxJumps = 2;
 
     // Initialization ad hoc
     const float camRayLength = 100f;
+    public int CurrentJump { get; private set; }
     bool onGround = false;
     bool running = false;
     int pathStep = 0;
     List<GameObject> path = new List<GameObject>();
+    bool pauseJump = false;
 
     // Initialized on awake
     Transform player;
     Rigidbody rb;
     PlayerAnimation playerAnimation;
     Camera cam;
-    int touchableLayer;
+    int nodeLayer;
+    int platformLayer;
 
     // Initialized on start
     float defaultY;
@@ -38,7 +42,10 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         playerAnimation = GetComponent<PlayerAnimation>();
         cam = Camera.main;
-        touchableLayer = LayerMask.GetMask("Node");
+        nodeLayer = LayerMask.GetMask("Node");
+        platformLayer = LayerMask.GetMask("Platform");
+
+        CurrentJump = 0;
     }
 
     private void Start()
@@ -50,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetButton("Fire1") && !running) // Add node to path
+        if (!pauseJump && Input.GetButton("Fire1") && !running) // Add node to path
         {
             GameObject node = NodeTouchedByMouse();
             if (node)
@@ -59,19 +66,27 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (Input.GetButtonDown("Fire2") && !running) // Start path
+        if (!pauseJump  && Input.GetButtonUp("Fire1") && !running) // Start path
         {
             StartPath();
         }
 
-        if (Input.GetButtonDown("Jump")) // Jump
+        if (!pauseJump && running && ((Input.GetButtonDown("Fire1") && Input.mousePosition.x < Screen.width / 2) || Input.GetButtonDown("Jump")) && CurrentJump < maxJumps) // Jump
         {
             Jump();
         }
 
+        else if (CurrentJump > 0)
+        {
+            CheckJumpFinish();
+        }
+
         if (DistanceFromTop(targetLocation, player.position) > nodeContactThreshold) // Move, change node or stop running
         {
-            Move();
+            if (!pauseJump)
+            {
+                Move(Time.deltaTime);
+            }
         }
         else if (pathStep <= path.Count && running)
         {
@@ -83,15 +98,24 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void Move()
+    void Move(float dt)
     {
-        player.Translate(Vector3.forward * speed);
+        player.Translate(Vector3.forward * speed * dt);
     }
 
     void Jump()
     {
         rb.velocity = Vector3.up * jump;
         playerAnimation.Jump();
+        CurrentJump++;
+    }
+
+    void CheckJumpFinish()
+    {
+        if (IsOnPlatform())
+        {
+            CurrentJump = 0;
+        }
     }
 
     // Path section
@@ -146,11 +170,37 @@ public class PlayerMovement : MonoBehaviour
     {
         onGround = true;
         ResetPath();
+        CurrentJump = 0;
     }
 
-    public bool isRunning()
+    public bool IsOnGround()
+    {
+        return onGround;
+    }
+
+    public bool IsRunning()
     {
         return running;
+    }
+
+    public bool IsJumping()
+    {
+        return CurrentJump > 0;
+    }
+
+    public void PauseJump()
+    {
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        rb.useGravity = false;
+        pauseJump = true;
+        Invoke("RestoreJump", jumpAttackAirPause); // TODO: Learn how to use and implemente coroutines
+    }
+
+    public void RestoreJump()
+    {
+        rb.useGravity = true;
+        pauseJump = false;
     }
 
     Vector3 GetWithDefaultY(Vector3 t)
@@ -162,7 +212,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Ray camRay = cam.ScreenPointToRay(Input.mousePosition);
         RaycastHit floorHit;
-        Physics.Raycast(camRay, out floorHit, camRayLength, touchableLayer);
+        Physics.Raycast(camRay, out floorHit, camRayLength, nodeLayer);
         return floorHit.point;
     }
 
@@ -170,9 +220,21 @@ public class PlayerMovement : MonoBehaviour
     {
         Ray camRay = cam.ScreenPointToRay(Input.mousePosition);
         RaycastHit floorHit;
-        Physics.Raycast(camRay, out floorHit, camRayLength, touchableLayer);
+        Physics.Raycast(camRay, out floorHit, camRayLength, nodeLayer);
         if (!floorHit.collider) return null;
         return floorHit.collider.gameObject;
+    }
+
+    bool IsOnPlatform()
+    {
+        if (rb.velocity.y > 0)
+        {
+            return false;
+        }
+        Ray topdown = new Ray(player.position, Vector3.down);
+        RaycastHit platformHit;
+        Physics.Raycast(topdown, out platformHit, player.localScale.z, platformLayer);
+        return platformHit.collider != null;
     }
 
     float DistanceFromTop(Vector3 p0, Vector3 p1)

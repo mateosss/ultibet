@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 33068143265224340}
   - component: {fileID: 23500956742780176}
   - component: {fileID: 65710601989752516}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: stilt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
