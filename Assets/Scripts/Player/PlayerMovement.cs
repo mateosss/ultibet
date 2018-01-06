@@ -5,25 +5,32 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
 
+
+    [Header("Movement")]
     public float speed = 0.1f;
     public float jump = 30f;
-    public float range = 0.5f;
-    public GameObject pathNodeDisplay;
-    public float fallMultiplier = 2.5f;
-    public float lowJumpMultiplier = 2f;
-    public bool isRunning = false;
 
-    float defaultY;
+    [Header("Advanced")]
+    public float nodeContactThreshold = 0.5f;
+    public GameObject pathNodeDisplay;
+
+    // Initialization ad hoc
+    const float camRayLength = 100f;
+    bool onGround = false;
+    bool running = false;
+    int pathStep = 0;
+    List<GameObject> path = new List<GameObject>();
+
+    // Initialized on awake
     Transform player;
     Rigidbody rb;
-    Camera cam;
-    Vector3 targetLocation;
     PlayerAnimation playerAnimation;
-    float camRayLength = 100f;
+    Camera cam;
     int touchableLayer;
-    bool onGround = false;
-    List<GameObject> path = new List<GameObject>();
-    int pathStep = 0;
+
+    // Initialized on start
+    float defaultY;
+    Vector3 targetLocation;
 
     void Awake()
     {
@@ -43,9 +50,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
 
-        ManageJump();
-
-        if (Input.GetButtonDown("Fire1") && !isRunning)
+        if (Input.GetButton("Fire1") && !running) // Add node to path
         {
             GameObject node = NodeTouchedByMouse();
             if (node)
@@ -54,27 +59,27 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (Input.GetButtonDown("Fire2") && !isRunning)
+        if (Input.GetButtonDown("Fire2") && !running) // Start path
         {
             StartPath();
         }
 
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetButtonDown("Jump")) // Jump
         {
             Jump();
         }
 
-        if (DistanceFromTop(targetLocation, player.position) > range)
+        if (DistanceFromTop(targetLocation, player.position) > nodeContactThreshold) // Move, change node or stop running
         {
             Move();
         }
-        else if (pathStep <= path.Count && isRunning)
+        else if (pathStep <= path.Count && running)
         {
             StartPath();
         }
         else
         {
-            isRunning = false;
+            running = false;
         }
     }
 
@@ -89,21 +94,7 @@ public class PlayerMovement : MonoBehaviour
         playerAnimation.Jump();
     }
 
-    void ManageJump()
-    {
-        if (rb.velocity.y < 0)
-        {
-            rb.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
-        }
-        else if (rb.velocity.y > 0 && !Input.GetButton("Jump"))
-        {
-            rb.velocity += Vector3.up * Physics.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
-        }
-        else
-        {
-            playerAnimation.JumpLand();
-        }
-    }
+    // Path section
 
     void StartPath()
     {
@@ -113,7 +104,7 @@ public class PlayerMovement : MonoBehaviour
             targetLocation.y = player.position.y;
             player.LookAt(targetLocation);
             pathStep++;
-            isRunning = true;
+            running = true;
         }
         else
         {
@@ -128,14 +119,15 @@ public class PlayerMovement : MonoBehaviour
         targetLocation = GetWithDefaultY(player.position);
         AddToPath(targetLocation);
         pathStep = 0;
-        isRunning = false;
+        running = false;
     }
 
     void AddToPath(Vector3 point)
     {
         point.y += 0.1f;
-        GameObject pathNode = Instantiate(pathNodeDisplay, point, pathNodeDisplay.GetComponent<Transform>().rotation);
+        if (path.Count > 0 && point == path[path.Count - 1].transform.position) return;
 
+        GameObject pathNode = Instantiate(pathNodeDisplay, point, pathNodeDisplay.GetComponent<Transform>().rotation);
         if (path.Count > 0)
         {
             LineRenderer lr = path[path.Count - 1].GetComponent<LineRenderer>();
@@ -145,15 +137,20 @@ public class PlayerMovement : MonoBehaviour
         path.Add(pathNode);
     }
 
+    public void OutOfFloor()
+    {
+        onGround = false;
+    }
+
     public void Fell()
     {
         onGround = true;
         ResetPath();
     }
 
-    public void OutOfFloor()
+    public bool isRunning()
     {
-        onGround = false;
+        return running;
     }
 
     Vector3 GetWithDefaultY(Vector3 t)

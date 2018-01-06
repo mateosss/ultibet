@@ -19,7 +19,7 @@ public class PlayerAttack : MonoBehaviour {
 
     void Update()
     {
-        if ((playerMovement.isRunning && Input.GetButtonDown("Fire1")) || Input.GetButtonDown("Fire3"))
+        if ((playerMovement.isRunning() && Input.GetButtonDown("Fire1")) || Input.GetButtonDown("Fire3"))
         {
             playerAnimation.Attack();
             attackCollider.enabled = true;
