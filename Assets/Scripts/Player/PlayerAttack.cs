@@ -6,6 +6,9 @@ public class PlayerAttack : MonoBehaviour {
 
     public float impactTime = 0.2f; // The time after the attack during which it destroys enemies
     public float cooldown = 1f; // Cooldown between attacks
+    public float range = 4f;
+    public Animator attackRangeDisplayAnimator;
+    public Animator healLineDisplayAnimator;
 
     PlayerAnimation playerAnimation;
     PlayerMovement playerMovement;
@@ -21,6 +24,8 @@ public class PlayerAttack : MonoBehaviour {
         groundLayer = LayerMask.GetMask("Ground");
 
         CooldownTimer = cooldown;
+
+        SetRange(range);
     }
 
     void Update()
@@ -57,6 +62,8 @@ public class PlayerAttack : MonoBehaviour {
     {
         CooldownTimer = 0f;
         playerAnimation.Attack();
+        attackRangeDisplayAnimator.SetTrigger("Attack");
+        healLineDisplayAnimator.SetTrigger("Attack");
 
         if (playerMovement.CurrentJump > 0 && playerMovement.CurrentJump < playerMovement.maxJumps)
         {
@@ -74,6 +81,13 @@ public class PlayerAttack : MonoBehaviour {
         {
             floorTile.Heal();
         }
+    }
+
+    public void SetRange(float newRange)
+    {
+        range = newRange;
+        attackCollider.size = new Vector3(range, 10f, range);
+        attackRangeDisplayAnimator.transform.parent.transform.localScale = new Vector3(1, attackRangeDisplayAnimator.transform.parent.transform.localScale.y, 1) * (range / 4f);
     }
 
 }
