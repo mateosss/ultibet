@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,9 +25,12 @@ public class FloorTileController : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Enemy" || other == playerCollider)
+        if (!isDamaged)
         {
-            Damage();
+            if (other.gameObject.tag == "Enemy" || other == playerCollider)
+            {
+                Damage();
+            }
         }
     }
 

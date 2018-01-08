@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,6 +10,12 @@ public class PlayerMovement : MonoBehaviour
     public float jump = 25f;
     public float jumpAttackAirPause = 0.2f;
 
+    [Header("Long Path Bonus (BPS = Bonus per second)")]
+    public float isLongPathFrom = 15f;
+    public float cooldownBPS = 0.1f;
+    public float rangeBPS = 0.5f;
+    public float overdriveBPS = 0.033f;
+
     [Header("Advanced")]
     public float nodeContactThreshold = 0.5f;
     public GameObject pathNodeDisplay;
@@ -17,10 +23,8 @@ public class PlayerMovement : MonoBehaviour
 
     // Initialization ad hoc
     const float camRayLength = 100f;
-    public int CurrentJump { get; private set; }
     bool onGround = false;
     bool running = false;
-    int pathStep = 0;
     List<GameObject> path = new List<GameObject>();
     bool pauseJump = false;
 
@@ -28,9 +32,18 @@ public class PlayerMovement : MonoBehaviour
     Transform player;
     Rigidbody rb;
     PlayerAnimation playerAnimation;
+    PlayerAttack playerAttack;
+    PlayerOverdrive playerOverdrive;
     Camera cam;
     int nodeLayer;
     int platformLayer;
+    public int CurrentJump { get; private set; }
+    public float DistanceTravelled { get; private set; }
+    public int NodesTravelled { get; private set; }
+    public int EnemiesKilled { get; private set; }
+    public float PathDistance { get; private set; }
+    public int PathStep { get; private set; }
+    public int PathKilled { get; private set; }
 
     // Initialized on start
     float defaultY;
@@ -41,17 +54,26 @@ public class PlayerMovement : MonoBehaviour
         player = GetComponent<Transform>();
         rb = GetComponent<Rigidbody>();
         playerAnimation = GetComponent<PlayerAnimation>();
+        playerAttack = GetComponent<PlayerAttack>();
+        playerOverdrive = GetComponent<PlayerOverdrive>();
         cam = Camera.main;
         nodeLayer = LayerMask.GetMask("Node");
         platformLayer = LayerMask.GetMask("Platform");
 
         CurrentJump = 0;
+        DistanceTravelled = 0f;
+        NodesTravelled = 0;
+        EnemiesKilled = 0;
+        PathDistance = 0f;
+        PathStep = 0;
+        PathKilled = 0;
     }
 
     private void Start()
     {
         defaultY = player.position.y;
         ResetPath();
+        StartCoroutine(BPS());
     }
 
     void Update()
@@ -75,7 +97,6 @@ public class PlayerMovement : MonoBehaviour
         {
             Jump();
         }
-
         else if (CurrentJump > 0)
         {
             CheckJumpFinish();
@@ -88,7 +109,7 @@ public class PlayerMovement : MonoBehaviour
                 Move(Time.deltaTime);
             }
         }
-        else if (pathStep <= path.Count && running)
+        else if (PathStep <= path.Count && running)
         {
             StartPath();
         }
@@ -98,9 +119,49 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    IEnumerator BPS() // Long path bonuses
+    {
+        bool withBonus = false;
+        float initialCooldown = playerAttack.cooldown;
+        float initialRange = playerAttack.range;
+        while (true)
+        {
+            if (running && PathDistance > isLongPathFrom)
+            {
+                if (!withBonus)
+                {
+                    withBonus = true;
+                }
+                if (playerAttack.cooldown > 0) // Cooldown
+                {
+                    playerAttack.cooldown -= cooldownBPS * Time.deltaTime;
+                }
+                playerAttack.SetRange(playerAttack.range + rangeBPS * Time.deltaTime); // Range
+                if (playerOverdrive.Charge < 1f) // Overdrive
+                {
+                    playerOverdrive.Charge += overdriveBPS * Time.deltaTime;
+                }
+                else
+                {
+                    playerOverdrive.Charge = 1f;
+                }
+            }
+            else if (withBonus)
+            {
+                withBonus = false;
+                playerAttack.cooldown = initialCooldown;
+                playerAttack.SetRange(initialRange);
+            }
+            yield return null;
+        }
+    }
+
     void Move(float dt)
     {
+        float move = speed * dt;
         player.Translate(Vector3.forward * speed * dt);
+        PathDistance += move;
+        DistanceTravelled += move;
     }
 
     void Jump()
@@ -122,15 +183,20 @@ public class PlayerMovement : MonoBehaviour
 
     void StartPath()
     {
-        if (pathStep < path.Count)
+        if (PathStep == 0)
         {
-            targetLocation = GetWithDefaultY(path[pathStep].transform.position);
-            targetLocation.y = player.position.y;
-            player.LookAt(targetLocation);
-            pathStep++;
+            PathStep++;
             running = true;
         }
-        else
+        else if (PathStep < path.Count) // Change to new node in the same path
+        {
+            targetLocation = GetWithDefaultY(path[PathStep].transform.position);
+            targetLocation.y = player.position.y;
+            player.LookAt(targetLocation);
+            PathStep++;
+            NodesTravelled++;
+        }
+        else // Stop path
         {
             ResetPath();
         }
@@ -142,7 +208,9 @@ public class PlayerMovement : MonoBehaviour
         path.Clear();
         targetLocation = GetWithDefaultY(player.position);
         AddToPath(targetLocation);
-        pathStep = 0;
+        PathDistance = 0f;
+        PathStep = 0;
+        PathKilled = 0;
         running = false;
     }
 
@@ -195,6 +263,15 @@ public class PlayerMovement : MonoBehaviour
         rb.useGravity = false;
         pauseJump = true;
         Invoke("RestoreJump", jumpAttackAirPause); // TODO: Learn how to use and implemente coroutines
+    }
+    
+    public void AddEnemyKilled()
+    {
+        if (running)
+        {
+            PathKilled++;
+        }
+        EnemiesKilled++;
     }
 
     public void RestoreJump()

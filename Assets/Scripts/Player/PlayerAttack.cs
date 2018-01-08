@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -54,7 +54,11 @@ public class PlayerAttack : MonoBehaviour {
         if (impactTimer > 0)
         {
             EnemyHealth enemy = other.GetComponent<EnemyHealth>();
-            if (enemy != null) enemy.Death();
+            if (enemy != null)
+            {
+                enemy.Death();
+                playerMovement.AddEnemyKilled();
+            }
         }
     }
 
@@ -75,7 +79,7 @@ public class PlayerAttack : MonoBehaviour {
         Ray topdown = new Ray(gameObject.transform.position, Vector3.down);
         RaycastHit tileHit;
         Physics.Raycast(topdown, out tileHit, 100f, groundLayer);
-        Debug.Log(tileHit.collider);
+
         FloorTileController floorTile = tileHit.collider.GetComponent<FloorTileController>();
         if (floorTile != null)
         {
@@ -87,7 +91,7 @@ public class PlayerAttack : MonoBehaviour {
     {
         range = newRange;
         attackCollider.size = new Vector3(range, 10f, range);
-        attackRangeDisplayAnimator.transform.parent.transform.localScale = new Vector3(1, attackRangeDisplayAnimator.transform.parent.transform.localScale.y, 1) * (range / 4f);
+        attackRangeDisplayAnimator.transform.parent.transform.localScale = new Vector3(1, 0, 1) * (range / 4f) + Vector3.up;
     }
 
 }
