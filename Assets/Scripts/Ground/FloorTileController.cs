@@ -9,7 +9,7 @@ public class FloorTileController : MonoBehaviour {
     BoxCollider playerCollider;
     Renderer rend;
 
-    bool isDamaged = false;
+    public bool isDamaged = false;
     Color normalColor;
     Color damagedColor;
 

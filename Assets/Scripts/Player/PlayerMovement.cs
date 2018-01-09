@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
     public float isLongPathFrom = 15f;
     public float cooldownBPS = 0.1f;
     public float rangeBPS = 0.5f;
-    public float overdriveBPS = 0.05f; // 0.1 is approx one lap to the 20x20 meters level
+    public float overdriveBPS = 0.06f; // 0.1 is approx one lap to the 20x20 meters level
 
     [Header("Extra")]
     public float nodeContactThreshold = 0.5f;
@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
     // Overdrive
 
     [Header("Overdrive")]
-    public float maxOverdriveDistance = 50f;
+    public float maxOverdriveDistance = 100f;
     public GameObject overdriveButton;
     public float dashDuration = 0.2f;
     public bool overdriving = false;

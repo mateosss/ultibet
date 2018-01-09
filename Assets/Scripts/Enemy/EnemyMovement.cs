@@ -6,17 +6,27 @@ public class EnemyMovement : MonoBehaviour {
 
     Transform player;
     UnityEngine.AI.NavMeshAgent nav;
-
+    static Vector3[] floorTiles;
 
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         nav = GetComponent<UnityEngine.AI.NavMeshAgent>();
+
+        Transform tiles = GameObject.Find("FloorTiles").transform;
+        floorTiles = new Vector3[tiles.childCount];
+        for (int i = 0; i < floorTiles.Length; i++)
+        {
+            floorTiles[i] = tiles.GetChild(i).position;
+        }
     }
 
 
     void Update()
     {
-        nav.SetDestination(player.position);
+        if (nav.remainingDistance <= nav.stoppingDistance)
+        {
+            nav.SetDestination(floorTiles[Random.Range(0, floorTiles.Length)]);
+        }
     }
 }
