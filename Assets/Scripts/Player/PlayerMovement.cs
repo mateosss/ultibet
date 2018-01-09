@@ -31,7 +31,6 @@ public class PlayerMovement : MonoBehaviour
     public float OverdriveCharge { get; private set; }
     public float overdriveDistance = 0f; // Current overdrive distance traveled
     bool endOverdrive = false;
-    float dashDistance = 0f;
     float dashTimer = 0f;
 
     // Current Path Stats
@@ -232,7 +231,6 @@ public class PlayerMovement : MonoBehaviour
         Vector3 target = GetWithDefaultY(targetLocation);
         if (dashTimer == 0)
         {
-            dashDistance = DistanceFromTop(target, player.position);
             if (PathStep >= path.Count - 1) playerAnimation.Dash();
         }
         dashTimer += Time.deltaTime;

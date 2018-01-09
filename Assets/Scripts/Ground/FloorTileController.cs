@@ -5,8 +5,9 @@ using UnityEngine;
 public class FloorTileController : MonoBehaviour {
 
     GameObject player;
-    PlayerMovement playerMovement;
     BoxCollider playerCollider;
+    BoxCollider playerAttackCollider;
+    PlayerMovement playerMovement;
     Renderer rend;
 
     public bool isDamaged = false;
@@ -16,8 +17,9 @@ public class FloorTileController : MonoBehaviour {
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        playerMovement = player.GetComponent<PlayerMovement>();
         playerCollider = player.GetComponents<BoxCollider>()[0];
+        playerAttackCollider = player.GetComponents<BoxCollider>()[1];
+        playerMovement = player.GetComponent<PlayerMovement>();
         rend = GetComponent<Renderer>();
         normalColor = rend.material.color;
         ColorUtility.TryParseHtmlString("#03A9F4", out damagedColor);
@@ -30,6 +32,14 @@ public class FloorTileController : MonoBehaviour {
             if (other.gameObject.tag == "Enemy" || other == playerCollider)
             {
                 Damage();
+            }
+        }
+
+        if (playerMovement.overdriving)
+        {
+            if (other == playerAttackCollider)
+            {
+                Heal();
             }
         }
     }

@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour {
 
-    Transform player;
     UnityEngine.AI.NavMeshAgent nav;
     static Vector3[] floorTiles;
 
     void Awake()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
         nav = GetComponent<UnityEngine.AI.NavMeshAgent>();
 
         Transform tiles = GameObject.Find("FloorTiles").transform;
