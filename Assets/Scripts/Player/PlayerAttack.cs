@@ -87,6 +87,11 @@ public class PlayerAttack : MonoBehaviour {
         }
     }
 
+    public void SetContinuousAttack(bool value)
+    {
+        attackCollider.enabled = value;
+    }
+
     public void SetRange(float newRange)
     {
         range = newRange;

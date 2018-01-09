@@ -14,40 +14,54 @@ public class PlayerMovement : MonoBehaviour
     public float isLongPathFrom = 15f;
     public float cooldownBPS = 0.1f;
     public float rangeBPS = 0.5f;
-    public float overdriveBPS = 0.033f;
+    public float overdriveBPS = 0.05f; // 0.1 is approx one lap to the 20x20 meters level
 
-    [Header("Advanced")]
+    [Header("Extra")]
     public float nodeContactThreshold = 0.5f;
     public GameObject pathNodeDisplay;
     public int maxJumps = 2;
 
-    // Initialization ad hoc
-    const float camRayLength = 100f;
+    // Overdrive
+
+    [Header("Overdrive")]
+    public float maxOverdriveDistance = 50f;
+    public GameObject overdriveButton;
+    public float dashDuration = 0.2f;
+    public bool overdriving = false;
+    public float OverdriveCharge { get; private set; }
+    public float overdriveDistance = 0f; // Current overdrive distance traveled
+    bool endOverdrive = false;
+    float dashDistance = 0f;
+    float dashTimer = 0f;
+
+    // Current Path Stats
+
+    public float PathDistance { get; private set; }
+    public int PathStep { get; private set; }
+    public int PathKilled { get; private set; }
+    public int CurrentJump { get; private set; }
+
     bool onGround = false;
     bool running = false;
     List<GameObject> path = new List<GameObject>();
     bool pauseJump = false;
+    Vector3 targetLocation;
 
-    // Initialized on awake
+    // General
     Transform player;
     Rigidbody rb;
     PlayerAnimation playerAnimation;
     PlayerAttack playerAttack;
-    PlayerOverdrive playerOverdrive;
     Camera cam;
+    const float camRayLength = 100f;
+    float defaultY;
     int nodeLayer;
     int platformLayer;
-    public int CurrentJump { get; private set; }
+    
+    // Long Term Stats
     public float DistanceTravelled { get; private set; }
     public int NodesTravelled { get; private set; }
     public int EnemiesKilled { get; private set; }
-    public float PathDistance { get; private set; }
-    public int PathStep { get; private set; }
-    public int PathKilled { get; private set; }
-
-    // Initialized on start
-    float defaultY;
-    Vector3 targetLocation;
 
     void Awake()
     {
@@ -55,7 +69,6 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         playerAnimation = GetComponent<PlayerAnimation>();
         playerAttack = GetComponent<PlayerAttack>();
-        playerOverdrive = GetComponent<PlayerOverdrive>();
         cam = Camera.main;
         nodeLayer = LayerMask.GetMask("Node");
         platformLayer = LayerMask.GetMask("Platform");
@@ -67,6 +80,7 @@ public class PlayerMovement : MonoBehaviour
         PathDistance = 0f;
         PathStep = 0;
         PathKilled = 0;
+        OverdriveCharge = 0f;
     }
 
     private void Start()
@@ -79,7 +93,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
 
-        if (!pauseJump && Input.GetButton("Fire1") && !running) // Add node to path
+        if (!pauseJump && !overdriving && Input.GetButton("Fire1") && !running) // Input: Add node to path
         {
             GameObject node = NodeTouchedByMouse();
             if (node)
@@ -88,12 +102,31 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (!pauseJump  && Input.GetButtonUp("Fire1") && !running) // Start path
+        if (overdriving && Input.GetButtonDown("Fire1") && !running) // Overdrive input
+        {
+            GameObject node = NodeTouchedByMouse();
+            if (node)
+            {
+                overdriveDistance += Vector3.Distance(node.transform.position, path[path.Count - 1].transform.position);
+                if (overdriveDistance < maxOverdriveDistance)
+                {
+                    AddToPath(node.transform.position);
+                }
+                else
+                {
+                    endOverdrive = true;
+                    StartPath();
+                }
+                
+            }
+        }
+
+        if (!pauseJump && !overdriving && Input.GetButtonUp("Fire1") && !running) // Start path
         {
             StartPath();
         }
 
-        if (!pauseJump && running && ((Input.GetButtonDown("Fire1") && Input.mousePosition.x < Screen.width / 2) || Input.GetButtonDown("Jump")) && CurrentJump < maxJumps) // Jump
+        if (!pauseJump && running && !overdriving && ((Input.GetButtonDown("Fire1") && Input.mousePosition.x < Screen.width / 2) || Input.GetButtonDown("Jump")) && CurrentJump < maxJumps) // Jump
         {
             Jump();
         }
@@ -102,9 +135,23 @@ public class PlayerMovement : MonoBehaviour
             CheckJumpFinish();
         }
 
+        if (!overdriving && !running && OverdriveCharge >= 1) // Activate overdrive
+        {
+            SetOverdrive(true);
+        }
+
+        if (overdriving && !running && endOverdrive)
+        {
+            SetOverdrive(false);
+        }
+
         if (DistanceFromTop(targetLocation, player.position) > nodeContactThreshold) // Move, change node or stop running
         {
-            if (!pauseJump)
+            if (overdriving)
+            {
+                DashMove();
+            }
+            else if (!pauseJump)
             {
                 Move(Time.deltaTime);
             }
@@ -112,6 +159,10 @@ public class PlayerMovement : MonoBehaviour
         else if (PathStep <= path.Count && running)
         {
             StartPath();
+            if (overdriving)
+            {
+                dashTimer = 0f;
+            }
         }
         else
         {
@@ -126,7 +177,7 @@ public class PlayerMovement : MonoBehaviour
         float initialRange = playerAttack.range;
         while (true)
         {
-            if (running && PathDistance > isLongPathFrom)
+            if (!overdriving && running && PathDistance > isLongPathFrom)
             {
                 if (!withBonus)
                 {
@@ -137,13 +188,13 @@ public class PlayerMovement : MonoBehaviour
                     playerAttack.cooldown -= cooldownBPS * Time.deltaTime;
                 }
                 playerAttack.SetRange(playerAttack.range + rangeBPS * Time.deltaTime); // Range
-                if (playerOverdrive.Charge < 1f) // Overdrive
+                if (OverdriveCharge < 1f) // Overdrive
                 {
-                    playerOverdrive.Charge += overdriveBPS * Time.deltaTime;
+                    OverdriveCharge += overdriveBPS * Time.deltaTime;
                 }
                 else
                 {
-                    playerOverdrive.Charge = 1f;
+                    OverdriveCharge = 1f;
                 }
             }
             else if (withBonus)
@@ -156,12 +207,42 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    void SetOverdrive(bool active)
+    {
+        overdriving = active;
+        overdriveButton.SetActive(active);
+        if (!active)
+        {
+            OverdriveCharge = 0f;
+            overdriveDistance = 0f;
+            endOverdrive = false;
+        }
+    }
+
     void Move(float dt)
     {
         float move = speed * dt;
         player.Translate(Vector3.forward * speed * dt);
         PathDistance += move;
         DistanceTravelled += move;
+    }
+
+    void DashMove()
+    {
+        Vector3 target = GetWithDefaultY(targetLocation);
+        if (dashTimer == 0)
+        {
+            dashDistance = DistanceFromTop(target, player.position);
+            if (PathStep >= path.Count - 1) playerAnimation.Dash();
+        }
+        dashTimer += Time.deltaTime;
+
+        Vector3 move = (target - player.position) * (dashTimer / dashDuration);
+        player.position += move;
+
+        PathDistance += move.magnitude;
+        DistanceTravelled += move.magnitude;
+        overdriveDistance += move.magnitude;
     }
 
     void Jump()
@@ -181,8 +262,13 @@ public class PlayerMovement : MonoBehaviour
 
     // Path section
 
-    void StartPath()
+    public void StartPath()
     {
+        if (overdriving)
+        {
+            playerAttack.SetContinuousAttack(true);
+        }
+
         if (PathStep == 0)
         {
             PathStep++;
@@ -212,6 +298,7 @@ public class PlayerMovement : MonoBehaviour
         PathStep = 0;
         PathKilled = 0;
         running = false;
+        playerAttack.SetContinuousAttack(false);
     }
 
     void AddToPath(Vector3 point)

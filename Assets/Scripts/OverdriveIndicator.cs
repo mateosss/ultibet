@@ -7,7 +7,7 @@ public class OverdriveIndicator : MonoBehaviour {
     public GameObject player;
 
     Transform playerTransform;
-    PlayerOverdrive playerOverdrive;
+    PlayerMovement playerMovement;
     Vector3 initialScale;
     Vector3 offset;
 
@@ -19,7 +19,7 @@ public class OverdriveIndicator : MonoBehaviour {
     private void Awake()
     {
         playerTransform = player.GetComponent<Transform>();
-        playerOverdrive = player.GetComponent<PlayerOverdrive>();
+        playerMovement = player.GetComponent<PlayerMovement>();
         initialScale = gameObject.transform.localScale;
 
         rend = GetComponent<Renderer>();
@@ -34,13 +34,20 @@ public class OverdriveIndicator : MonoBehaviour {
 
     private void LateUpdate()
     {
-        gameObject.transform.localScale = initialScale * Mathf.Clamp(playerOverdrive.Charge, 0.2f, 1.0f);
+        if (playerMovement.overdriving)
+        {
+            gameObject.transform.localScale = initialScale * Mathf.Clamp(1 - playerMovement.overdriveDistance / playerMovement.maxOverdriveDistance, 0.2f, 1.0f);
+        } else
+        {
+            gameObject.transform.localScale = initialScale * Mathf.Clamp(playerMovement.OverdriveCharge, 0.2f, 1.0f);
+        }
+        
         //gameObject.transform.position = playerTransform.position + offset;
-        if (!ready && playerOverdrive.Charge >= 1f)
+        if (!ready && playerMovement.OverdriveCharge >= 1f)
         {
             Ready();
         }
-        else if (ready && playerOverdrive.Charge < 1f)
+        else if (ready && playerMovement.OverdriveCharge < 1f)
         {
             NotReady();
         }

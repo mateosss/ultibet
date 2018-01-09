@@ -26,4 +26,9 @@ public class PlayerAnimation : MonoBehaviour {
     {
         anim.SetTrigger("Attack");
     }
+
+    public void Dash()
+    {
+        anim.SetTrigger("Dash");
+    }
 }
