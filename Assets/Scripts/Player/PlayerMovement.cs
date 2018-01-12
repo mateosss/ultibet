@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Movement")]
     public float speed = 4f;
-    public float jump = 25f;
+    public float jump = 30f;
     public float jumpAttackAirPause = 0.2f;
 
     [Header("Long Path Bonus (BPS = Bonus per second)")]

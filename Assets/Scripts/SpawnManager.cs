@@ -36,7 +36,7 @@ public class SpawnManager : MonoBehaviour {
                 currentWaveSpawnedEnemies++;
                 yield return new WaitForSeconds(spawnTime);
             }
-            else if (currentWaveKilledEnemies == currentWaveSpawnedEnemies)
+            else if (currentWaveKilledEnemies >= currentWaveSpawnedEnemies)
             {
                 wave += 3;
                 waveText.text = "Wave " + wave;

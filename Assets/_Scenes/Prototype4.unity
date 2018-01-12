@@ -1795,7 +1795,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 802230866}
   m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 16.6, y: 20, z: -24.7}
+  m_LocalPosition: {x: 0.15, y: 4.18, z: 0.54}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1878,15 +1878,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4500609038243912, guid: 47f6b5b2784df5345b33e22e8b1f4889, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -16.22
+      value: -15.6
       objectReference: {fileID: 0}
     - target: {fileID: 4500609038243912, guid: 47f6b5b2784df5345b33e22e8b1f4889, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 13.47
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 4500609038243912, guid: 47f6b5b2784df5345b33e22e8b1f4889, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -16.22
+      value: -15.6
       objectReference: {fileID: 0}
     - target: {fileID: 4500609038243912, guid: 47f6b5b2784df5345b33e22e8b1f4889, type: 2}
       propertyPath: m_LocalRotation.x
@@ -1912,6 +1912,21 @@ Prefab:
         type: 2}
       propertyPath: orthographic size
       value: 6.730149
+      objectReference: {fileID: 0}
+    - target: {fileID: 20409654214498618, guid: 47f6b5b2784df5345b33e22e8b1f4889,
+        type: 2}
+      propertyPath: far clip plane
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 20409654214498618, guid: 47f6b5b2784df5345b33e22e8b1f4889,
+        type: 2}
+      propertyPath: m_NormalizedViewPortRect.width
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 20409654214498618, guid: 47f6b5b2784df5345b33e22e8b1f4889,
+        type: 2}
+      propertyPath: m_Depth
+      value: -1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 47f6b5b2784df5345b33e22e8b1f4889, type: 2}
@@ -2153,7 +2168,7 @@ Prefab:
     - target: {fileID: 114078573341881666, guid: bbd68a18c33d2914685c195a38485499,
         type: 2}
       propertyPath: jump
-      value: 25
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 114078573341881666, guid: bbd68a18c33d2914685c195a38485499,
         type: 2}
