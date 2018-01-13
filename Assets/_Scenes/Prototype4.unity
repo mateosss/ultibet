@@ -2219,6 +2219,10 @@ Prefab:
       propertyPath: maxOverdriveDistance
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 1448871235569572, guid: bbd68a18c33d2914685c195a38485499, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bbd68a18c33d2914685c195a38485499, type: 2}
   m_IsPrefabParent: 0
@@ -4418,3 +4422,19 @@ Transform:
   m_PrefabParentObject: {fileID: 4074927891947314, guid: 88ace0da93c8b1643be3fcf38099f1a7,
     type: 2}
   m_PrefabInternal: {fileID: 2109723292}
+--- !u!1 &2141988815 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1464873246388034, guid: 47f6b5b2784df5345b33e22e8b1f4889,
+    type: 2}
+  m_PrefabInternal: {fileID: 884148025}
+--- !u!114 &2141988816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2141988815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d39d6e5872191d34e84879a6f6a240d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
