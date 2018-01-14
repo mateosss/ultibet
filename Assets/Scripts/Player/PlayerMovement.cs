@@ -343,13 +343,37 @@ public class PlayerMovement : MonoBehaviour
 
     public void PauseJump()
     {
+        //StartCoroutine(JumpAttack());
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
         rb.useGravity = false;
         pauseJump = true;
-        Invoke("RestoreJump", jumpAttackAirPause); // TODO: Learn how to use and implemente coroutines
+        Invoke("RestoreJump", jumpAttackAirPause);
     }
     
+    public void RestoreJump()
+    {
+        rb.useGravity = true;
+        pauseJump = false;
+    }
+
+    IEnumerator JumpAttack()
+    {
+        Vector3 velocity = rb.velocity;
+        Vector3 angularVelocity = rb.angularVelocity;
+
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        rb.useGravity = false;
+        pauseJump = true;
+        yield return new WaitForSeconds(jumpAttackAirPause);
+
+        rb.velocity = velocity;
+        rb.angularVelocity = angularVelocity;
+        rb.useGravity = true;
+        pauseJump = false;
+    }
+
     public void AddEnemyKilled()
     {
         if (running)
@@ -357,12 +381,6 @@ public class PlayerMovement : MonoBehaviour
             PathKilled++;
         }
         EnemiesKilled++;
-    }
-
-    public void RestoreJump()
-    {
-        rb.useGravity = true;
-        pauseJump = false;
     }
 
     Vector3 GetWithDefaultY(Vector3 t)
