@@ -52,7 +52,7 @@ LightmapSettings:
     m_TemporalCoherenceThreshold: 1
     m_EnvironmentLightingMode: 0
     m_EnableBakedLightmaps: 1
-    m_EnableRealtimeLightmaps: 1
+    m_EnableRealtimeLightmaps: 0
   m_LightmapEditorSettings:
     serializedVersion: 9
     m_Resolution: 2
@@ -89,7 +89,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaIndirect: 2
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
-  m_LightingDataAsset: {fileID: 112000082, guid: 58a166cacb01da546998bdc6b2217ae5,
+  m_LightingDataAsset: {fileID: 112000002, guid: 58a166cacb01da546998bdc6b2217ae5,
     type: 2}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -1415,6 +1415,10 @@ Prefab:
       propertyPath: m_FarClipPlane
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 11900000, guid: 94e69bca4c0e9f246a532016d9781dd1, type: 2}
+      propertyPath: m_IgnoreLayers.m_Bits
+      value: 2080
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 94e69bca4c0e9f246a532016d9781dd1, type: 2}
   m_IsPrefabParent: 0
@@ -1827,7 +1831,7 @@ Light:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_Lightmapping: 4
+  m_Lightmapping: 1
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
@@ -1915,53 +1919,6 @@ Transform:
   m_PrefabParentObject: {fileID: 4074927891947314, guid: 88ace0da93c8b1643be3fcf38099f1a7,
     type: 2}
   m_PrefabInternal: {fileID: 842898944}
---- !u!1001 &863021054
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4496784763593578, guid: e7c2294c878c9b64f8c49bfe76243cac, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -3.08
-      objectReference: {fileID: 0}
-    - target: {fileID: 4496784763593578, guid: e7c2294c878c9b64f8c49bfe76243cac, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0.48
-      objectReference: {fileID: 0}
-    - target: {fileID: 4496784763593578, guid: e7c2294c878c9b64f8c49bfe76243cac, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: -4.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4496784763593578, guid: e7c2294c878c9b64f8c49bfe76243cac, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4496784763593578, guid: e7c2294c878c9b64f8c49bfe76243cac, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4496784763593578, guid: e7c2294c878c9b64f8c49bfe76243cac, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4496784763593578, guid: e7c2294c878c9b64f8c49bfe76243cac, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4496784763593578, guid: e7c2294c878c9b64f8c49bfe76243cac, type: 2}
-      propertyPath: m_RootOrder
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 119553223538665492, guid: e7c2294c878c9b64f8c49bfe76243cac,
-        type: 2}
-      propertyPath: m_IgnoreLayers.m_Bits
-      value: 5120
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: e7c2294c878c9b64f8c49bfe76243cac, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1001 &884148025
 Prefab:
   m_ObjectHideFlags: 0

@@ -308,7 +308,10 @@ public class PlayerMovement : MonoBehaviour
         if (path.Count > 0)
         {
             LineRenderer lr = path[path.Count - 1].GetComponent<LineRenderer>();
-            lr.SetPosition(0, path[path.Count - 1].transform.position);
+            Vector3 start = path[path.Count - 1].transform.position;
+            start.y -= 0.05f;
+            lr.SetPosition(0, start);
+            point.y -= 0.1f;
             lr.SetPosition(1, point);
         }
         path.Add(pathNode);

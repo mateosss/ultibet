@@ -171,7 +171,7 @@ Projector:
   m_Material: {fileID: 2100000, guid: e30ff3588e719f34bbf0c66f22d97487, type: 2}
   m_IgnoreLayers:
     serializedVersion: 2
-    m_Bits: 5120
+    m_Bits: 5152
 --- !u!135 &135996385945776494
 SphereCollider:
   m_ObjectHideFlags: 1
