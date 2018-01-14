@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Extra")]
     public float nodeContactThreshold = 0.5f;
+    public float maxTimeForWallCollision = 0.5f; // After this amount of seconds the movement starts to check for wall collisions, it is useful when you felt really close to a wall and want to get up.
     public GameObject pathNodeDisplay;
     public int maxJumps = 2;
 
@@ -45,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
     List<GameObject> path = new List<GameObject>();
     bool pauseJump = false;
     Vector3 targetLocation;
+    float maxWallCollisionTimer = 0f;
 
     // General
     Transform player;
@@ -143,7 +145,10 @@ public class PlayerMovement : MonoBehaviour
         {
             SetOverdrive(false);
         }
+    }
 
+    private void FixedUpdate()
+    {
         if (DistanceFromTop(targetLocation, player.position) > nodeContactThreshold) // Move, change node or stop running
         {
             if (overdriving)
@@ -220,10 +225,25 @@ public class PlayerMovement : MonoBehaviour
 
     void Move(float dt)
     {
+        Vector3 lastPosition = player.position;
+
         float move = speed * dt;
         player.Translate(Vector3.forward * speed * dt);
-        PathDistance += move;
-        DistanceTravelled += move;
+
+        if (Vector3.Angle(GetWithDefaultY(player.position) - GetWithDefaultY(lastPosition), GetWithDefaultY(targetLocation) - GetWithDefaultY(lastPosition)) < 0.5f)
+        {
+            PathDistance += move;
+            DistanceTravelled += move;
+        }
+        else if (maxWallCollisionTimer <= maxTimeForWallCollision)
+        {
+            maxWallCollisionTimer += dt;
+        }
+        else
+        {
+            player.position = lastPosition;
+            ResetPath();
+        }
     }
 
     void DashMove()
@@ -296,6 +316,7 @@ public class PlayerMovement : MonoBehaviour
         PathStep = 0;
         PathKilled = 0;
         running = false;
+        maxWallCollisionTimer = 0f;
         playerAttack.SetContinuousAttack(false);
     }
 
@@ -418,6 +439,15 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit platformHit;
         Physics.Raycast(topdown, out platformHit, player.localScale.z, platformLayer);
         return platformHit.collider != null;
+    }
+
+    bool IsOnWall()
+    {
+        Ray front = new Ray(player.position, player.forward);
+        RaycastHit wallHit;
+        Physics.Raycast(front, out wallHit, player.localScale.z, platformLayer);
+        //Debug.DrawLine(player.position, player.position + player.forward * 5, Color.green);
+        return wallHit.collider != null;
     }
 
     float DistanceFromTop(Vector3 p0, Vector3 p1)
