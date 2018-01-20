@@ -45,6 +45,7 @@ public class PlayerMovement : MonoBehaviour
     bool running = false;
     List<GameObject> path = new List<GameObject>();
     bool pauseJump = false;
+    bool shouldJump = false;
     Vector3 targetLocation;
     float maxWallCollisionTimer = 0f;
 
@@ -58,7 +59,7 @@ public class PlayerMovement : MonoBehaviour
     float defaultY;
     int nodeLayer;
     int platformLayer;
-    
+   
     // Long Term Stats
     public float DistanceTravelled { get; private set; }
     public int NodesTravelled { get; private set; }
@@ -138,7 +139,7 @@ public class PlayerMovement : MonoBehaviour
                 }
                 else
                 {
-                    if (playerAttack.CooldownTimer > playerAttack.cooldown) // TODO make an attackAsPossible and a jumpAsPossible properties, and modify those by the inputs in the updates so I KISS and don't repeat code as bad as this 
+                    if (playerAttack.CooldownTimer > playerAttack.cooldown)
                     {
                         playerAttack.Attack();
                     }    
@@ -146,9 +147,17 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (!pauseJump && running && !overdriving && (Input.GetButtonDown("Fire1") && TouchingLeftSide() || Input.GetButtonDown("Jump")) && CurrentJump < maxJumps) // Jump
+        if (running && !overdriving && (shouldJump || (Input.GetButtonDown("Fire1") && TouchingLeftSide() || Input.GetButtonDown("Jump"))) && CurrentJump < maxJumps) // Jump
         {
-            Jump();
+            if (pauseJump)
+            {
+                shouldJump = true;
+            }
+            else
+            {
+                Jump();
+            }
+            
         }
         else if (CurrentJump > 0)
         {
@@ -284,6 +293,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Jump()
     {
+        shouldJump = false;
         rb.velocity = Vector3.up * jump;
         playerAnimation.Jump();
         CurrentJump++;
@@ -483,5 +493,10 @@ public class PlayerMovement : MonoBehaviour
     bool TouchingLeftSide()
     {
         return Input.mousePosition.x < Screen.width / 2;
+    }
+
+    public bool IsDrawingPath()
+    {
+        return !running && path.Count > 1;
     }
 }
