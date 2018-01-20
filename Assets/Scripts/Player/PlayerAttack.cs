@@ -62,7 +62,7 @@ public class PlayerAttack : MonoBehaviour {
         }
     }
 
-    private void Attack()
+    public void Attack()
     {
         CooldownTimer = 0f;
         playerAnimation.Attack();

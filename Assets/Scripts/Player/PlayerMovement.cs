@@ -93,7 +93,6 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-
         if (!pauseJump && !overdriving && Input.GetButton("Fire1") && !running) // Input: Add node to path
         {
             GameObject node = NodeTouchedByMouse();
@@ -124,10 +123,30 @@ public class PlayerMovement : MonoBehaviour
 
         if (!pauseJump && !overdriving && Input.GetButtonUp("Fire1") && !running) // Start path
         {
-            StartPath();
+            if (path.Count > 1) // Path stroke has started
+            {
+                StartPath();
+            }
+            else
+            {
+                if (TouchingLeftSide())
+                {
+                    if (CurrentJump < maxJumps)
+                    {
+                        Jump();
+                    }
+                }
+                else
+                {
+                    if (playerAttack.CooldownTimer > playerAttack.cooldown) // TODO make an attackAsPossible and a jumpAsPossible properties, and modify those by the inputs in the updates so I KISS and don't repeat code as bad as this 
+                    {
+                        playerAttack.Attack();
+                    }    
+                }
+            }
         }
 
-        if (!pauseJump && running && !overdriving && ((Input.GetButtonDown("Fire1") && Input.mousePosition.x < Screen.width / 2) || Input.GetButtonDown("Jump")) && CurrentJump < maxJumps) // Jump
+        if (!pauseJump && running && !overdriving && (Input.GetButtonDown("Fire1") && TouchingLeftSide() || Input.GetButtonDown("Jump")) && CurrentJump < maxJumps) // Jump
         {
             Jump();
         }
@@ -282,6 +301,11 @@ public class PlayerMovement : MonoBehaviour
 
     public void StartPath()
     {
+        if (!running)
+        {
+            playerAnimation.Run();
+        }
+
         if (overdriving)
         {
             playerAttack.SetContinuousAttack(true);
@@ -318,6 +342,7 @@ public class PlayerMovement : MonoBehaviour
         running = false;
         maxWallCollisionTimer = 0f;
         playerAttack.SetContinuousAttack(false);
+        playerAnimation.Still();
     }
 
     void AddToPath(Vector3 point)
@@ -453,5 +478,10 @@ public class PlayerMovement : MonoBehaviour
     float DistanceFromTop(Vector3 p0, Vector3 p1)
     {
         return Vector2.Distance(new Vector2(p0.x, p0.z), new Vector2(p1.x, p1.z));
+    }
+
+    bool TouchingLeftSide()
+    {
+        return Input.mousePosition.x < Screen.width / 2;
     }
 }
