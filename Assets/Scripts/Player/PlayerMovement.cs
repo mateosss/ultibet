@@ -133,7 +133,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (TouchingLeftSide())
                 {
-                    if (CurrentJump < maxJumps)
+                    if (CurrentJump < maxJumps || onGround)
                     {
                         Jump();
                     }
@@ -148,7 +148,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         
-        if (running && !overdriving && (shouldJump || (Input.GetButtonDown("Fire1") && TouchingLeftSide() || Input.GetButtonDown("Jump"))) && CurrentJump < maxJumps) // Jump
+        if (running && !overdriving && (shouldJump || (Input.GetButtonDown("Fire1") && TouchingLeftSide() || Input.GetButtonDown("Jump"))) && (CurrentJump < maxJumps || onGround)) // Jump
         {
             if (pauseJump)
             {
