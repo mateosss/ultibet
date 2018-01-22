@@ -31,4 +31,14 @@ public class PlayerAnimation : MonoBehaviour {
     {
         anim.SetTrigger("Dash");
     }
+
+    public void Still()
+    {
+        anim.SetBool("Running", false);
+    }
+
+    public void Run()
+    {
+        anim.SetBool("Running", true);
+    }
 }

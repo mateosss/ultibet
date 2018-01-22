@@ -40,6 +40,7 @@ public class PlayerMovement : MonoBehaviour
     public int PathStep { get; private set; }
     public int PathKilled { get; private set; }
     public int CurrentJump { get; private set; }
+    public int JumpState { get; private set; }
 
     bool onGround = false;
     bool running = false;
@@ -146,7 +147,7 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
-
+        
         if (running && !overdriving && (shouldJump || (Input.GetButtonDown("Fire1") && TouchingLeftSide() || Input.GetButtonDown("Jump"))) && CurrentJump < maxJumps) // Jump
         {
             if (pauseJump)
@@ -279,7 +280,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 target = GetWithDefaultY(targetLocation);
         if (dashTimer == 0)
         {
-            if (PathStep >= path.Count - 1) playerAnimation.Dash();
+            if (PathStep <= path.Count) playerAnimation.Dash();
         }
         dashTimer += Time.deltaTime;
 
@@ -311,7 +312,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void StartPath()
     {
-        if (!running)
+        if (!running && !overdriving)
         {
             playerAnimation.Run();
         }
@@ -345,6 +346,8 @@ public class PlayerMovement : MonoBehaviour
         path.ForEach(Destroy);
         path.Clear();
         targetLocation = GetWithDefaultY(player.position);
+        //targetLocation -= new Vector3(0, 0.5f, 0);
+        targetLocation.y -= 0.5f;
         AddToPath(targetLocation);
         PathDistance = 0f;
         PathStep = 0;
