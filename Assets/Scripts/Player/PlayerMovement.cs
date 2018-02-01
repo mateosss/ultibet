@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Movement")]
     public float speed = 4f;
+    public float speedModifier = 1f; // Multiplies speed by this
     public float jump = 30f;
     public float jumpAttackAirPause = 0.2f;
 
@@ -45,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
     bool onGround = false;
     bool running = false;
     List<GameObject> path = new List<GameObject>();
+    GetUpFromFloor getUpFromFloor;
     bool pauseJump = false;
     bool shouldJump = false;
     Vector3 targetLocation;
@@ -75,6 +77,8 @@ public class PlayerMovement : MonoBehaviour
         cam = Camera.main;
         nodeLayer = LayerMask.GetMask("Node");
         platformLayer = LayerMask.GetMask("Platform");
+        getUpFromFloor = GetComponent<GetUpFromFloor>();
+        getUpFromFloor.enabled = false;
 
         CurrentJump = 0;
         DistanceTravelled = 0f;
@@ -254,25 +258,10 @@ public class PlayerMovement : MonoBehaviour
 
     void Move(float dt)
     {
-        Vector3 lastPosition = player.position;
-
-        float move = speed * dt;
-        player.Translate(Vector3.forward * speed * dt);
-
-        if (Vector3.Angle(GetWithDefaultY(player.position) - GetWithDefaultY(lastPosition), GetWithDefaultY(targetLocation) - GetWithDefaultY(lastPosition)) < 0.5f)
-        {
-            PathDistance += move;
-            DistanceTravelled += move;
-        }
-        else if (maxWallCollisionTimer <= maxTimeForWallCollision)
-        {
-            maxWallCollisionTimer += dt;
-        }
-        else
-        {
-            player.position = lastPosition;
-            ResetPath();
-        }
+        float move = speed * dt * speedModifier;
+        player.Translate(Vector3.forward * move);
+        PathDistance += move;
+        DistanceTravelled += move;
     }
 
     void DashMove()
@@ -292,7 +281,7 @@ public class PlayerMovement : MonoBehaviour
         overdriveDistance += move.magnitude;
     }
 
-    void Jump()
+    public void Jump()
     {
         shouldJump = false;
         rb.velocity = Vector3.up * jump;
@@ -302,7 +291,7 @@ public class PlayerMovement : MonoBehaviour
 
     void CheckJumpFinish()
     {
-        if (IsOnPlatform())
+        if (IsOnPlatform()) // Jump finished
         {
             CurrentJump = 0;
         }
@@ -315,6 +304,11 @@ public class PlayerMovement : MonoBehaviour
         if (!running && !overdriving)
         {
             playerAnimation.Run();
+        }
+
+        if (onGround)
+        {
+            getUpFromFloor.enabled = true;
         }
 
         if (overdriving)
@@ -376,9 +370,15 @@ public class PlayerMovement : MonoBehaviour
         path.Add(pathNode);
     }
 
+    void SetSpeedModifier(float to)
+    {
+        speedModifier = to;
+    }
+
     public void OutOfFloor()
     {
         onGround = false;
+        getUpFromFloor.enabled = false;
     }
 
     public void Fell()
