@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     public float speedModifier = 1f; // Multiplies speed by this
     public float jump = 30f;
     public float jumpAttackAirPause = 0.2f;
+    public GameObject stopPathButton;
 
     [Header("Long Path Bonus (BPS = Bonus per second)")]
     public float isLongPathFrom = 15f;
@@ -26,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
     // Overdrive
 
     [Header("Overdrive")]
-    public float maxOverdriveDistance = 100f;
+    public float maxOverdriveDistance = 50f;
     public GameObject overdriveButton;
     public float dashDuration = 0.2f;
     public bool overdriving = false;
@@ -278,7 +279,7 @@ public class PlayerMovement : MonoBehaviour
 
         PathDistance += move.magnitude;
         DistanceTravelled += move.magnitude;
-        overdriveDistance += move.magnitude;
+        //overdriveDistance += move.magnitude;
     }
 
     public void Jump()
@@ -304,11 +305,7 @@ public class PlayerMovement : MonoBehaviour
         if (!running && !overdriving)
         {
             playerAnimation.Run();
-        }
-
-        if (onGround)
-        {
-            getUpFromFloor.enabled = true;
+            stopPathButton.SetActive(true);
         }
 
         if (overdriving)
@@ -335,7 +332,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void ResetPath()
+    public void ResetPath()
     {
         path.ForEach(Destroy);
         path.Clear();
@@ -350,6 +347,7 @@ public class PlayerMovement : MonoBehaviour
         maxWallCollisionTimer = 0f;
         playerAttack.SetContinuousAttack(false);
         playerAnimation.Still();
+        stopPathButton.SetActive(false);
     }
 
     void AddToPath(Vector3 point)
@@ -384,7 +382,7 @@ public class PlayerMovement : MonoBehaviour
     public void Fell()
     {
         onGround = true;
-        ResetPath();
+        getUpFromFloor.enabled = true;
         CurrentJump = 0;
     }
 
