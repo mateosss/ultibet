@@ -17,15 +17,16 @@ public class OverdriveBar : MonoBehaviour {
     private void Awake()
     {
         slider = GetComponent<Slider>();
-        notReadyColor = fill.color;
-        ColorUtility.TryParseHtmlString("#FF5722", out readyColor);
+        readyColor = fill.color;
+        ColorUtility.TryParseHtmlString("#F06292", out notReadyColor);
     }
 
     private void LateUpdate()
     {
+
         if (playerMovement.overdriving)
         {
-            slider.value = Mathf.Clamp(1 - playerMovement.overdriveDistance / playerMovement.maxOverdriveDistance, 0f, 1f);
+            slider.value = Mathf.Clamp(1 - playerMovement.overdriveDistanceDrawn / playerMovement.maxOverdriveDistance, 0f, 1f);
         }
         else
         {

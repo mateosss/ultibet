@@ -10,6 +10,9 @@ public class PlayerMovement : MonoBehaviour
     public float speedModifier = 1f; // Multiplies speed by this
     public float jump = 30f;
     public float jumpAttackAirPause = 0.2f;
+    public float maxPathDistance = 10f;
+    public float maxPathDistanceMultiplier = 1f;
+    public float maxPathDistanceBonusPerKill = 0.1f;
     public GameObject stopPathButton;
 
     [Header("Long Path Bonus (BPS = Bonus per second)")]
@@ -32,18 +35,19 @@ public class PlayerMovement : MonoBehaviour
     public float dashDuration = 0.2f;
     public bool overdriving = false;
     public float OverdriveCharge { get; private set; }
-    public float overdriveDistance = 0f; // Current overdrive distance traveled
+    public float overdriveDistanceDrawn = 0f; // Current overdrive distance drawn
     bool endOverdrive = false;
     float dashTimer = 0f;
 
     // Current Path Stats
 
     public float PathDistance { get; private set; }
+    public float PathDistanceFromLastFalling { get; private set; }
     public int PathStep { get; private set; }
     public int PathKilled { get; private set; }
     public int CurrentJump { get; private set; }
     public int JumpState { get; private set; }
-
+    public float pathDistanceDrawn; // Current drawn path distance
     bool onGround = false;
     bool running = false;
     List<GameObject> path = new List<GameObject>();
@@ -86,6 +90,7 @@ public class PlayerMovement : MonoBehaviour
         NodesTravelled = 0;
         EnemiesKilled = 0;
         PathDistance = 0f;
+        PathDistanceFromLastFalling = 0f;
         PathStep = 0;
         PathKilled = 0;
         OverdriveCharge = 0f;
@@ -105,7 +110,11 @@ public class PlayerMovement : MonoBehaviour
             GameObject node = NodeTouchedByMouse();
             if (node)
             {
-                AddToPath(node.transform.position);
+                if (pathDistanceDrawn < maxPathDistance * maxPathDistanceMultiplier)
+                {
+                    pathDistanceDrawn += Vector3.Distance(node.transform.position, path[path.Count - 1].transform.position);
+                    AddToPath(node.transform.position);
+                }
             }
         }
 
@@ -114,8 +123,8 @@ public class PlayerMovement : MonoBehaviour
             GameObject node = NodeTouchedByMouse();
             if (node)
             {
-                overdriveDistance += Vector3.Distance(node.transform.position, path[path.Count - 1].transform.position);
-                if (overdriveDistance < maxOverdriveDistance)
+                overdriveDistanceDrawn += Vector3.Distance(node.transform.position, path[path.Count - 1].transform.position);
+                if (overdriveDistanceDrawn < maxOverdriveDistance)
                 {
                     AddToPath(node.transform.position);
                 }
@@ -208,14 +217,14 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    IEnumerator BPS() // Long path bonuses
+    IEnumerator BPS() // Long path bonuses per second
     {
         bool withBonus = false;
         float initialCooldown = playerAttack.cooldown;
         float initialRange = playerAttack.range;
         while (true)
         {
-            if (!overdriving && running && PathDistance > isLongPathFrom)
+            if (!overdriving && running && PathDistanceFromLastFalling > isLongPathFrom)
             {
                 if (!withBonus)
                 {
@@ -252,7 +261,7 @@ public class PlayerMovement : MonoBehaviour
         if (!active)
         {
             OverdriveCharge = 0f;
-            overdriveDistance = 0f;
+            overdriveDistanceDrawn = 0f;
             endOverdrive = false;
         }
     }
@@ -262,6 +271,7 @@ public class PlayerMovement : MonoBehaviour
         float move = speed * dt * speedModifier;
         player.Translate(Vector3.forward * move);
         PathDistance += move;
+        if (!onGround) PathDistanceFromLastFalling += move;
         DistanceTravelled += move;
     }
 
@@ -341,8 +351,11 @@ public class PlayerMovement : MonoBehaviour
         targetLocation.y -= 0.5f;
         AddToPath(targetLocation);
         PathDistance = 0f;
+        PathDistanceFromLastFalling = 0f;
         PathStep = 0;
+        maxPathDistanceMultiplier += PathKilled * maxPathDistanceBonusPerKill;
         PathKilled = 0;
+        pathDistanceDrawn = 0f;
         running = false;
         maxWallCollisionTimer = 0f;
         playerAttack.SetContinuousAttack(false);
@@ -382,6 +395,7 @@ public class PlayerMovement : MonoBehaviour
     public void Fell()
     {
         onGround = true;
+        PathDistanceFromLastFalling = 0f;
         getUpFromFloor.enabled = true;
         CurrentJump = 0;
     }

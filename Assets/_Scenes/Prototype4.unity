@@ -2155,6 +2155,9 @@ MonoBehaviour:
   speedModifier: 1
   jump: 30
   jumpAttackAirPause: 0.2
+  maxPathDistance: 10
+  maxPathDistanceMultiplier: 1
+  maxPathDistanceBonusPerKill: 0.1
   stopPathButton: {fileID: 1260353354}
   isLongPathFrom: 15
   cooldownBPS: 0.1
@@ -2169,7 +2172,8 @@ MonoBehaviour:
   overdriveButton: {fileID: 381917745}
   dashDuration: 0.2
   overdriving: 0
-  overdriveDistance: 0
+  overdriveDistanceDrawn: 0
+  pathDistanceDrawn: 0
 --- !u!1 &592937794
 GameObject:
   m_ObjectHideFlags: 0
@@ -3750,6 +3754,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1104036705}
   - component: {fileID: 1104036706}
+  - component: {fileID: 1104036707}
   m_Layer: 5
   m_Name: PathBar
   m_TagString: Untagged
@@ -3775,7 +3780,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 112, y: 40}
-  m_SizeDelta: {x: 320, y: 48}
+  m_SizeDelta: {x: 260, y: 48}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1104036706
 MonoBehaviour:
@@ -3825,6 +3830,19 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Slider+SliderEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &1104036707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1104036704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e8cbfc6e255c8447a160715134ac02b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerMovement: {fileID: 586663012}
+  fill: {fileID: 1073953868}
 --- !u!1 &1106761341
 GameObject:
   m_ObjectHideFlags: 0
