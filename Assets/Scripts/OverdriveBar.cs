@@ -17,8 +17,8 @@ public class OverdriveBar : MonoBehaviour {
     private void Awake()
     {
         slider = GetComponent<Slider>();
-        readyColor = fill.color;
-        ColorUtility.TryParseHtmlString("#F06292", out notReadyColor);
+        notReadyColor = fill.color;
+        ColorUtility.TryParseHtmlString("#FF5722", out readyColor);
     }
 
     private void LateUpdate()

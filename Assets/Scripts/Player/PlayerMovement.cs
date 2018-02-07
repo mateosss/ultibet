@@ -353,7 +353,6 @@ public class PlayerMovement : MonoBehaviour
         PathDistance = 0f;
         PathDistanceFromLastFalling = 0f;
         PathStep = 0;
-        maxPathDistanceMultiplier += PathKilled * maxPathDistanceBonusPerKill;
         PathKilled = 0;
         pathDistanceDrawn = 0f;
         running = false;
@@ -455,6 +454,7 @@ public class PlayerMovement : MonoBehaviour
             PathKilled++;
         }
         EnemiesKilled++;
+        maxPathDistanceMultiplier = 1f + EnemiesKilled * maxPathDistanceBonusPerKill;
     }
 
     Vector3 GetWithDefaultY(Vector3 t)
