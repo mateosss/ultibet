@@ -12,6 +12,7 @@ public class EnemyMovement : MonoBehaviour {
         nav = GetComponent<UnityEngine.AI.NavMeshAgent>();
 
         Transform tiles = GameObject.Find("FloorTiles").transform;
+        Debug.Log("children: " + tiles.childCount);
         floorTiles = new Vector3[tiles.childCount];
         for (int i = 0; i < floorTiles.Length; i++)
         {

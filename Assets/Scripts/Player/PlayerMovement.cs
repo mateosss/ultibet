@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
     public float isLongPathFrom = 15f;
     public float cooldownBPS = 0.1f;
     public float rangeBPS = 0.5f;
-    public float overdriveBPS = 0.06f; // 0.1 is approx one lap to the 20x20 meters level
+    public float overdriveBPS = 0.1f; // 0.1 is approx one lap to the 20x20 meters level
 
     [Header("Extra")]
     public float nodeContactThreshold = 0.5f;
@@ -63,6 +63,7 @@ public class PlayerMovement : MonoBehaviour
     PlayerAnimation playerAnimation;
     PlayerAttack playerAttack;
     Camera cam;
+    CameraShake cameraShake;
     const float camRayLength = 100f;
     float defaultY;
     int nodeLayer;
@@ -80,6 +81,7 @@ public class PlayerMovement : MonoBehaviour
         playerAnimation = GetComponent<PlayerAnimation>();
         playerAttack = GetComponent<PlayerAttack>();
         cam = Camera.main;
+        cameraShake = cam.GetComponent<CameraShake>();
         nodeLayer = LayerMask.GetMask("Node");
         platformLayer = LayerMask.GetMask("Platform");
         getUpFromFloor = GetComponent<GetUpFromFloor>();
@@ -281,6 +283,7 @@ public class PlayerMovement : MonoBehaviour
         if (dashTimer == 0)
         {
             if (PathStep <= path.Count) playerAnimation.Dash();
+            ShakeCamera();
         }
         dashTimer += Time.deltaTime;
 
@@ -393,6 +396,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Fell()
     {
+        ShakeCamera();
         onGround = true;
         PathDistanceFromLastFalling = 0f;
         getUpFromFloor.enabled = true;
@@ -513,5 +517,10 @@ public class PlayerMovement : MonoBehaviour
     public bool IsDrawingPath()
     {
         return !running && path.Count > 1;
+    }
+
+    void ShakeCamera()
+    {
+        cameraShake.shakeDuration = 0.05f;
     }
 }

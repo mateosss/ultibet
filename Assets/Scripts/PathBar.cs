@@ -28,7 +28,7 @@ public class PathBar : MonoBehaviour {
     {
         if (bonusMultiplier != playerMovement.maxPathDistanceMultiplier)
         {
-            sliderTransform.sizeDelta = new Vector2((sliderTransform.rect.width / bonusMultiplier) * playerMovement.maxPathDistanceMultiplier, sliderTransform.sizeDelta.y);
+            //sliderTransform.sizeDelta = new Vector2((sliderTransform.rect.width / bonusMultiplier) * playerMovement.maxPathDistanceMultiplier, sliderTransform.sizeDelta.y);
             bonusMultiplier = playerMovement.maxPathDistanceMultiplier;
         }
 
