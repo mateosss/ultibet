@@ -55,7 +55,6 @@ public class PlayerMovement : MonoBehaviour
     bool pauseJump = false;
     bool shouldJump = false;
     Vector3 targetLocation;
-    float maxWallCollisionTimer = 0f;
 
     // General
     Transform player;
@@ -359,7 +358,6 @@ public class PlayerMovement : MonoBehaviour
         PathKilled = 0;
         pathDistanceDrawn = 0f;
         running = false;
-        maxWallCollisionTimer = 0f;
         playerAttack.SetContinuousAttack(false);
         playerAnimation.Still();
         stopPathButton.SetActive(false);

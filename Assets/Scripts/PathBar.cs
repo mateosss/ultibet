@@ -9,7 +9,7 @@ public class PathBar : MonoBehaviour {
     public Image fill;
 
     Slider slider;
-    RectTransform sliderTransform;
+    //RectTransform sliderTransform;
 
     bool ready = false;
     Color notReadyColor;
@@ -19,7 +19,7 @@ public class PathBar : MonoBehaviour {
     private void Awake()
     {
         slider = GetComponent<Slider>();
-        sliderTransform = GetComponent<RectTransform>();
+        //sliderTransform = GetComponent<RectTransform>();
         notReadyColor = fill.color;
         ColorUtility.TryParseHtmlString("#E91E63", out readyColor);
     }
