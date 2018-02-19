@@ -63,6 +63,7 @@ public class PlayerMovement : MonoBehaviour
     PlayerAttack playerAttack;
     Camera cam;
     CameraShake cameraShake;
+    LineRenderer pathCurve;
     const float camRayLength = 100f;
     float defaultY;
     int nodeLayer;
@@ -85,6 +86,7 @@ public class PlayerMovement : MonoBehaviour
         platformLayer = LayerMask.GetMask("Platform");
         getUpFromFloor = GetComponent<GetUpFromFloor>();
         getUpFromFloor.enabled = false;
+        pathCurve = Camera.main.GetComponent<LineRenderer>();
 
         CurrentJump = 0;
         DistanceTravelled = 0f;
@@ -369,16 +371,23 @@ public class PlayerMovement : MonoBehaviour
         if (path.Count > 0 && point == path[path.Count - 1].transform.position) return;
 
         GameObject pathNode = Instantiate(pathNodeDisplay, point, pathNodeDisplay.GetComponent<Transform>().rotation);
+        path.Add(pathNode);
+
         if (path.Count > 0)
         {
-            LineRenderer lr = path[path.Count - 1].GetComponent<LineRenderer>();
-            Vector3 start = path[path.Count - 1].transform.position;
-            start.y -= 0.05f;
-            lr.SetPosition(0, start);
-            point.y -= 0.1f;
-            lr.SetPosition(1, point);
+            pathCurve.positionCount = path.Count;
+            for (int i = 0; i < pathCurve.positionCount; i++)
+            {
+                Vector3 yCorrect = new Vector3(path[i].transform.position.x, 1.25f, path[i].transform.position.z);
+                pathCurve.SetPosition(i, yCorrect);
+            }
+            //LineRenderer lr = path[path.Count - 1].GetComponent<LineRenderer>();
+            //Vector3 start = path[path.Count - 1].transform.position;
+            //start.y -= 0.05f;
+            //lr.SetPosition(0, start);
+            //point.y -= 0.1f;
+            //lr.SetPosition(1, point);
         }
-        path.Add(pathNode);
     }
 
     void SetSpeedModifier(float to)

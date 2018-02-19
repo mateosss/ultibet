@@ -11669,6 +11669,120 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d39d6e5872191d34e84879a6f6a240d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!120 &2141988817
+LineRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2141988815}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 783b182a86766bd4bad8931a01f582fd, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Positions:
+  - {x: 2.68, y: 1.25, z: -6.96}
+  - {x: 6.53, y: 1.25, z: -4.35}
+  - {x: 5.48, y: 1.25, z: -0.98}
+  - {x: 5.54, y: 1.25, z: 2.19}
+  m_Parameters:
+    serializedVersion: 2
+    widthMultiplier: 0.38
+    widthCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: 0.02136612
+        value: 0
+        inSlope: 0.7924878
+        outSlope: 0.7924878
+        tangentMode: 0
+      - serializedVersion: 2
+        time: 0.1
+        value: 0.48437488
+        inSlope: 0.04243911
+        outSlope: 0.04243911
+        tangentMode: 0
+      - serializedVersion: 2
+        time: 0.48717427
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - serializedVersion: 2
+        time: 0.90000004
+        value: 0.54999685
+        inSlope: -0.091419056
+        outSlope: -0.091419056
+        tangentMode: 0
+      - serializedVersion: 2
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
+    colorGradient:
+      serializedVersion: 2
+      key0: {r: 0.12941177, g: 0.5882353, b: 0.9529412, a: 0.49803922}
+      key1: {r: 0.73333335, g: 0.87058824, b: 0.9843137, a: 0.49803922}
+      key2: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 65535
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 2
+    numCornerVertices: 5
+    numCapVertices: 5
+    alignment: 1
+    textureMode: 0
+    generateLightingData: 0
+  m_UseWorldSpace: 1
+  m_Loop: 0
 --- !u!4 &2141988820 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4500609038243912, guid: 47f6b5b2784df5345b33e22e8b1f4889,
