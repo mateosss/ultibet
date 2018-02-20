@@ -11703,11 +11703,7 @@ LineRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Positions:
-  - {x: 2.68, y: 1.25, z: -6.96}
-  - {x: 6.53, y: 1.25, z: -4.35}
-  - {x: 5.48, y: 1.25, z: -0.98}
-  - {x: 5.54, y: 1.25, z: 2.19}
+  m_Positions: []
   m_Parameters:
     serializedVersion: 2
     widthMultiplier: 0.38
@@ -11716,7 +11712,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 2
         time: 0.02136612
-        value: 0
+        value: 0.2631579
         inSlope: 0.7924878
         outSlope: 0.7924878
         tangentMode: 0
@@ -11740,7 +11736,7 @@ LineRenderer:
         tangentMode: 0
       - serializedVersion: 2
         time: 1
-        value: 0
+        value: 0.2631579
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -11803,6 +11799,22 @@ MonoBehaviour:
   shakeDuration: 0
   shakeAmount: 0.1
   decreaseFactor: 1
+--- !u!114 &2141988823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2141988815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 829836ad92964814c908da08ce868ce2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lineSegmentSize: 0.15
+  lineWidth: 0.1
+  showGizmos: 0
+  gizmoSize: 0.1
+  gizmoColor: {r: 0.9529412, g: 0.12941174, b: 0.12941174, a: 0.49803922}
 --- !u!1 &2145018037
 GameObject:
   m_ObjectHideFlags: 0

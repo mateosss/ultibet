@@ -64,6 +64,7 @@ public class PlayerMovement : MonoBehaviour
     Camera cam;
     CameraShake cameraShake;
     LineRenderer pathCurve;
+    CurvedLineRenderer pathCurveRenderer;
     const float camRayLength = 100f;
     float defaultY;
     int nodeLayer;
@@ -87,6 +88,7 @@ public class PlayerMovement : MonoBehaviour
         getUpFromFloor = GetComponent<GetUpFromFloor>();
         getUpFromFloor.enabled = false;
         pathCurve = Camera.main.GetComponent<LineRenderer>();
+        pathCurveRenderer = Camera.main.GetComponent<CurvedLineRenderer>();
 
         CurrentJump = 0;
         DistanceTravelled = 0f;
@@ -354,6 +356,7 @@ public class PlayerMovement : MonoBehaviour
         //targetLocation -= new Vector3(0, 0.5f, 0);
         targetLocation.y -= 0.5f;
         AddToPath(targetLocation);
+        pathCurveRenderer.Clear();
         PathDistance = 0f;
         PathDistanceFromLastFalling = 0f;
         PathStep = 0;
@@ -367,27 +370,30 @@ public class PlayerMovement : MonoBehaviour
 
     void AddToPath(Vector3 point)
     {
+        pathCurveRenderer.StopDisappear();
         point.y += 0.1f;
         if (path.Count > 0 && point == path[path.Count - 1].transform.position) return;
 
         GameObject pathNode = Instantiate(pathNodeDisplay, point, pathNodeDisplay.GetComponent<Transform>().rotation);
+        pathNode.transform.parent = cam.transform;
+        pathCurveRenderer.Refresh();
         path.Add(pathNode);
 
-        if (path.Count > 0)
-        {
-            pathCurve.positionCount = path.Count;
-            for (int i = 0; i < pathCurve.positionCount; i++)
-            {
-                Vector3 yCorrect = new Vector3(path[i].transform.position.x, 1.25f, path[i].transform.position.z);
-                pathCurve.SetPosition(i, yCorrect);
-            }
-            //LineRenderer lr = path[path.Count - 1].GetComponent<LineRenderer>();
-            //Vector3 start = path[path.Count - 1].transform.position;
-            //start.y -= 0.05f;
-            //lr.SetPosition(0, start);
-            //point.y -= 0.1f;
-            //lr.SetPosition(1, point);
-        }
+        //if (path.Count > 0)
+        //{
+        //    pathCurve.positionCount = path.Count;
+        //    for (int i = 0; i < pathCurve.positionCount; i++)
+        //    {
+        //        Vector3  yCorrect = new Vector3(path[i].transform.position.x, 1.25f, path[i].transform.position.z);
+        //        pathCurve.SetPosition(i, yCorrect);
+        //    }
+        //    //LineRenderer lr = path[path.Count - 1].GetComponent<LineRenderer>();
+        //    //Vector3 start = path[path.Count - 1].transform.position;
+        //    //start.y -= 0.05f;
+        //    //lr.SetPosition(0, start);
+        //    //point.y -= 0.1f;
+        //    //lr.SetPosition(1, point);
+        //}
     }
 
     void SetSpeedModifier(float to)
@@ -496,10 +502,13 @@ public class PlayerMovement : MonoBehaviour
         {
             return false;
         }
-        Ray topdown = new Ray(player.position, Vector3.down);
-        RaycastHit platformHit;
-        Physics.Raycast(topdown, out platformHit, player.localScale.z, platformLayer);
-        return platformHit.collider != null;
+
+        //Debug.DrawRay(player.position, Vector3.down, Color.yellow);
+        return Physics.BoxCast(player.position, Vector3.one * 0.5f, Vector3.down, Quaternion.identity, player.localScale.z, platformLayer);
+        //Ray topdown = new Ray(player.position, Vector3.down);
+        //RaycastHit platformHit;
+        //Physics.Raycast(topdown, out platformHit, player.localScale.z, platformLayer);
+        //return platformHit.collider != null;
     }
 
     bool IsOnWall()
