@@ -13,8 +13,8 @@ public class FloorTileController : MonoBehaviour {
     Renderer rend;
 
     public bool isDamaged = false;
-    Color normalColor;
-    Color damagedColor;
+    //Color normalColor;
+    //Color damagedColor;
 
     private void Awake()
     {
@@ -26,8 +26,8 @@ public class FloorTileController : MonoBehaviour {
         meshRend = GetComponent<MeshRenderer>();
         meshRend.enabled = false;
         rend = GetComponent<Renderer>();
-        normalColor = rend.material.color;
-        ColorUtility.TryParseHtmlString("#5ed32280", out damagedColor);
+        //normalColor = rend.material.color;
+        //ColorUtility.TryParseHtmlString("#5ed32280", out damagedColor);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -53,13 +53,13 @@ public class FloorTileController : MonoBehaviour {
     {
         isDamaged = true;
         meshRend.enabled = true;
-        rend.material.color = damagedColor;
+        //rend.material.color = damagedColor;
     }
 
     public void Heal()
     {
         isDamaged = false;
         meshRend.enabled = false;
-        rend.material.color = normalColor;
+        //rend.material.color = normalColor;
     }
 }

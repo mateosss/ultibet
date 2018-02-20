@@ -1,0 +1,179 @@
+fileFormatVersion: 2
+guid: ffdfb56702d6f6c4ab2db1fa292f3900
+timeCreated: 1519141523
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: BrokenTile
+    100004: Floor1
+    100006: Rocks
+    100008: Stone2_1
+    100010: Stone3_1
+    100012: Stone4_1
+    100014: Stone5_1
+    100016: Stone_1
+    100018: Stone_10
+    100020: Stone_2
+    100022: Stone_3
+    100024: Stone_4
+    100026: Stone_5
+    100028: Stone_6
+    100030: Stone_7
+    100032: Stone_8
+    100034: Stone_9
+    400000: //RootNode
+    400002: BrokenTile
+    400004: Floor1
+    400006: Rocks
+    400008: Stone2_1
+    400010: Stone3_1
+    400012: Stone4_1
+    400014: Stone5_1
+    400016: Stone_1
+    400018: Stone_10
+    400020: Stone_2
+    400022: Stone_3
+    400024: Stone_4
+    400026: Stone_5
+    400028: Stone_6
+    400030: Stone_7
+    400032: Stone_8
+    400034: Stone_9
+    2100000: Grass
+    2100002: Sand
+    2100004: Stone1
+    2100006: BrokenSand
+    2300000: BrokenTile
+    2300002: Floor1
+    2300004: Rocks
+    2300006: Stone2_1
+    2300008: Stone3_1
+    2300010: Stone4_1
+    2300012: Stone5_1
+    2300014: Stone_1
+    2300016: Stone_10
+    2300018: Stone_2
+    2300020: Stone_3
+    2300022: Stone_4
+    2300024: Stone_5
+    2300026: Stone_6
+    2300028: Stone_7
+    2300030: Stone_8
+    2300032: Stone_9
+    3300000: BrokenTile
+    3300002: Floor1
+    3300004: Rocks
+    3300006: Stone2_1
+    3300008: Stone3_1
+    3300010: Stone4_1
+    3300012: Stone5_1
+    3300014: Stone_1
+    3300016: Stone_10
+    3300018: Stone_2
+    3300020: Stone_3
+    3300022: Stone_4
+    3300024: Stone_5
+    3300026: Stone_6
+    3300028: Stone_7
+    3300030: Stone_8
+    3300032: Stone_9
+    4300000: Floor1
+    4300002: Stone_1
+    4300004: Stone_2
+    4300006: Stone_3
+    4300008: Stone_4
+    4300010: Stone_5
+    4300012: Stone_6
+    4300014: Stone_7
+    4300016: Stone_8
+    4300018: Stone_9
+    4300020: Stone_10
+    4300022: Stone2_1
+    4300024: Stone3_1
+    4300026: Stone4_1
+    4300028: Stone5_1
+    4300030: Rocks
+    4300032: BrokenTile
+    9500000: //RootNode
+  externalObjects: {}
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
