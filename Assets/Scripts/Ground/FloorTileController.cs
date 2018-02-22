@@ -9,12 +9,13 @@ public class FloorTileController : MonoBehaviour {
     BoxCollider playerAttackCollider;
     PlayerMovement playerMovement;
 
-    MeshRenderer meshRend;
+    //MeshRenderer meshRend;
     Renderer rend;
 
+    SpriteRenderer display;
+    Animator anim;
+
     public bool isDamaged = false;
-    //Color normalColor;
-    //Color damagedColor;
 
     private void Awake()
     {
@@ -23,11 +24,12 @@ public class FloorTileController : MonoBehaviour {
         playerAttackCollider = player.GetComponents<BoxCollider>()[1];
         playerMovement = player.GetComponent<PlayerMovement>();
 
-        meshRend = GetComponent<MeshRenderer>();
-        meshRend.enabled = false;
+        //meshRend = GetComponent<MeshRenderer>();
+        //meshRend.enabled = false;
+        display = GetComponentInChildren<SpriteRenderer>();
+        //display.enabled = false;
+        anim = GetComponentInChildren<Animator>();
         rend = GetComponent<Renderer>();
-        //normalColor = rend.material.color;
-        //ColorUtility.TryParseHtmlString("#5ed32280", out damagedColor);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -51,15 +53,23 @@ public class FloorTileController : MonoBehaviour {
 
     public void Damage()
     {
-        isDamaged = true;
-        meshRend.enabled = true;
-        //rend.material.color = damagedColor;
+        if (!isDamaged)
+        {
+            isDamaged = true;
+            //meshRend.enabled = true;
+            //display.enabled = true;
+            anim.SetTrigger("Damage");
+        }
     }
 
     public void Heal()
     {
-        isDamaged = false;
-        meshRend.enabled = false;
-        //rend.material.color = normalColor;
+        if (isDamaged)
+        {
+            isDamaged = false;
+            //meshRend.enabled = false;
+            //display.enabled = false;
+            anim.SetTrigger("Heal");
+        }
     }
 }

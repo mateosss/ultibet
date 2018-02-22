@@ -11014,32 +11014,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1891257593264022, guid: 88ace0da93c8b1643be3fcf38099f1a7, type: 2}
-      propertyPath: m_Name
-      value: FloorTile
-      objectReference: {fileID: 0}
-    - target: {fileID: 4074927891947314, guid: 88ace0da93c8b1643be3fcf38099f1a7, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4074927891947314, guid: 88ace0da93c8b1643be3fcf38099f1a7, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 65141732930017458, guid: 88ace0da93c8b1643be3fcf38099f1a7,
-        type: 2}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1891257593264022, guid: 88ace0da93c8b1643be3fcf38099f1a7, type: 2}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967287
-      objectReference: {fileID: 0}
-    - target: {fileID: 23547712786367998, guid: 88ace0da93c8b1643be3fcf38099f1a7,
-        type: 2}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 88ace0da93c8b1643be3fcf38099f1a7, type: 2}
   m_IsPrefabParent: 0
