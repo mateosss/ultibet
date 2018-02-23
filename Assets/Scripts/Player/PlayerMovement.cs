@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,6 +27,9 @@ public class PlayerMovement : MonoBehaviour
     public float maxTimeForWallCollision = 0.5f; // After this amount of seconds the movement starts to check for wall collisions, it is useful when you felt really close to a wall and want to get up.
     public GameObject pathNodeDisplay;
     public int maxJumps = 2;
+
+    [Header("Particles")]
+    public ParticleSystem jumpParticles;
 
     // Overdrive
 
@@ -302,6 +306,7 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = Vector3.up * jump;
         playerAnimation.Jump();
         CurrentJump++;
+        jumpParticles.Play();
     }
 
     void CheckJumpFinish()
@@ -309,6 +314,7 @@ public class PlayerMovement : MonoBehaviour
         if (IsOnPlatform()) // Jump finished
         {
             CurrentJump = 0;
+            StartCoroutine(Delay(jumpParticles.Play, 0.1f));
         }
     }
 
@@ -520,5 +526,11 @@ public class PlayerMovement : MonoBehaviour
     void ShakeCamera()
     {
         cameraShake.shakeDuration = 0.05f;
+    }
+
+    IEnumerator Delay(Action function, float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        function();
     }
 }
