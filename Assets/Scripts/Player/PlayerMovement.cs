@@ -63,7 +63,6 @@ public class PlayerMovement : MonoBehaviour
     PlayerAttack playerAttack;
     Camera cam;
     CameraShake cameraShake;
-    LineRenderer pathCurve;
     CurvedLineRenderer pathCurveRenderer;
     const float camRayLength = 100f;
     float defaultY;
@@ -87,7 +86,6 @@ public class PlayerMovement : MonoBehaviour
         platformLayer = LayerMask.GetMask("Platform");
         getUpFromFloor = GetComponent<GetUpFromFloor>();
         getUpFromFloor.enabled = false;
-        pathCurve = Camera.main.GetComponent<LineRenderer>();
         pathCurveRenderer = Camera.main.GetComponent<CurvedLineRenderer>();
 
         CurrentJump = 0;
@@ -378,22 +376,6 @@ public class PlayerMovement : MonoBehaviour
         pathNode.transform.parent = cam.transform;
         pathCurveRenderer.Refresh();
         path.Add(pathNode);
-
-        //if (path.Count > 0)
-        //{
-        //    pathCurve.positionCount = path.Count;
-        //    for (int i = 0; i < pathCurve.positionCount; i++)
-        //    {
-        //        Vector3  yCorrect = new Vector3(path[i].transform.position.x, 1.25f, path[i].transform.position.z);
-        //        pathCurve.SetPosition(i, yCorrect);
-        //    }
-        //    //LineRenderer lr = path[path.Count - 1].GetComponent<LineRenderer>();
-        //    //Vector3 start = path[path.Count - 1].transform.position;
-        //    //start.y -= 0.05f;
-        //    //lr.SetPosition(0, start);
-        //    //point.y -= 0.1f;
-        //    //lr.SetPosition(1, point);
-        //}
     }
 
     void SetSpeedModifier(float to)

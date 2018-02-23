@@ -8,11 +8,6 @@ public class FloorTileController : MonoBehaviour {
     BoxCollider playerCollider;
     BoxCollider playerAttackCollider;
     PlayerMovement playerMovement;
-
-    //MeshRenderer meshRend;
-    Renderer rend;
-
-    SpriteRenderer display;
     Animator anim;
 
     public bool isDamaged = false;
@@ -23,13 +18,7 @@ public class FloorTileController : MonoBehaviour {
         playerCollider = player.GetComponents<BoxCollider>()[0];
         playerAttackCollider = player.GetComponents<BoxCollider>()[1];
         playerMovement = player.GetComponent<PlayerMovement>();
-
-        //meshRend = GetComponent<MeshRenderer>();
-        //meshRend.enabled = false;
-        display = GetComponentInChildren<SpriteRenderer>();
-        //display.enabled = false;
         anim = GetComponentInChildren<Animator>();
-        rend = GetComponent<Renderer>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -56,8 +45,6 @@ public class FloorTileController : MonoBehaviour {
         if (!isDamaged)
         {
             isDamaged = true;
-            //meshRend.enabled = true;
-            //display.enabled = true;
             anim.SetTrigger("Damage");
         }
     }
@@ -67,8 +54,6 @@ public class FloorTileController : MonoBehaviour {
         if (isDamaged)
         {
             isDamaged = false;
-            //meshRend.enabled = false;
-            //display.enabled = false;
             anim.SetTrigger("Heal");
         }
     }
