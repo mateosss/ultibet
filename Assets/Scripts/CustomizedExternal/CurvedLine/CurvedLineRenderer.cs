@@ -59,15 +59,14 @@ public class CurvedLineRenderer : MonoBehaviour
     IEnumerator Disappear()
     {
         disappearing = true;
+        Vector3[] positions = new Vector3[line.positionCount];
+        line.GetPositions(positions);
         while (line.positionCount > disappearAmount && disappearing)
         {
-            Vector3[] positions = new Vector3[line.positionCount];
-            line.GetPositions(positions);
-
             line.positionCount -= disappearAmount;
             for (int i = 0; i < line.positionCount; i++)
             {
-                line.SetPosition(i, positions[i + disappearAmount]);
+                line.SetPosition(i, positions[(positions.Length - line.positionCount) + i]);
             }
             yield return new WaitForSeconds(disappearEvery);
         }
