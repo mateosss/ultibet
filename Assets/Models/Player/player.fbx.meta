@@ -43,6 +43,7 @@ ModelImporter:
     100070: spine
     100072: uplegL
     100074: uplegR
+    100076: warrior
     400000: Armature
     400002: armL
     400004: armR
@@ -81,12 +82,15 @@ ModelImporter:
     400070: spine
     400072: uplegL
     400074: uplegR
+    400076: warrior
     2100000: sword1
     2100002: Material.001
+    2100004: material_uvgrid
     2300000: pCube1
     3300000: pCube1
     4300000: pCube1
     4300002: Player
+    4300004: warrior
     7400000: Armature|Attack
     7400002: Armature|Dash
     7400004: Armature|Jump2
@@ -95,9 +99,10 @@ ModelImporter:
     7400010: Armature|Still
     9500000: //RootNode
     13700000: Player
+    13700002: warrior
   externalObjects: {}
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
     materialLocation: 1
