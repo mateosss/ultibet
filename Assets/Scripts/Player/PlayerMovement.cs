@@ -34,8 +34,9 @@ public class PlayerMovement : MonoBehaviour
     // Overdrive
 
     [Header("Overdrive")]
-    public float maxOverdriveDistance = 50f;
     public GameObject overdriveButton;
+    public Texture overdriveSkin;
+    public float maxOverdriveDistance = 50f;
     public float dashDuration = 0.2f;
     public bool overdriving = false;
     public float OverdriveCharge { get; private set; }
@@ -68,6 +69,8 @@ public class PlayerMovement : MonoBehaviour
     Camera cam;
     CameraShake cameraShake;
     CurvedLineRenderer pathCurveRenderer;
+    Material playerMaterial;
+    Texture defaultSkin;
     const float camRayLength = 100f;
     float defaultY;
     int nodeLayer;
@@ -92,6 +95,8 @@ public class PlayerMovement : MonoBehaviour
         getUpFromFloor.enabled = false;
         pathCurveRenderer = Camera.main.GetComponent<CurvedLineRenderer>();
 
+        playerMaterial = playerAnimation.displayObject.GetComponentsInChildren<Renderer>()[1].material;
+        defaultSkin = playerMaterial.mainTexture;
         CurrentJump = 0;
         DistanceTravelled = 0f;
         NodesTravelled = 0;
@@ -270,6 +275,11 @@ public class PlayerMovement : MonoBehaviour
             OverdriveCharge = 0f;
             overdriveDistanceDrawn = 0f;
             endOverdrive = false;
+            playerMaterial.mainTexture = defaultSkin;
+        }
+        else
+        {
+            playerMaterial.mainTexture = overdriveSkin;
         }
     }
 
