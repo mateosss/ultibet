@@ -10,7 +10,7 @@ public class PlayerAttack : MonoBehaviour {
     public Animator attackRangeDisplayAnimator;
     public Animator healLineDisplayAnimator;
 
-    PlayerAnimation playerAnimation;
+    PlayerDisplay playerDisplay;
     PlayerMovement playerMovement;
     BoxCollider attackCollider;
     float impactTimer = 0f;
@@ -18,7 +18,7 @@ public class PlayerAttack : MonoBehaviour {
     int groundLayer;
 
     void Awake () {
-        playerAnimation = GetComponent<PlayerAnimation>();
+        playerDisplay = GetComponent<PlayerDisplay>();
         playerMovement = GetComponent<PlayerMovement>();
         attackCollider = GetComponents<BoxCollider>()[1];
         groundLayer = LayerMask.GetMask("Ground");
@@ -65,7 +65,7 @@ public class PlayerAttack : MonoBehaviour {
     public void Attack()
     {
         CooldownTimer = 0f;
-        playerAnimation.Attack();
+        playerDisplay.Attack();
         attackRangeDisplayAnimator.SetTrigger("Attack");
         healLineDisplayAnimator.SetTrigger("Attack");
 
@@ -76,15 +76,19 @@ public class PlayerAttack : MonoBehaviour {
 
         attackCollider.enabled = true;
 
-        Ray topdown = new Ray(gameObject.transform.position, Vector3.down);
-        RaycastHit tileHit;
-        Physics.Raycast(topdown, out tileHit, 100f, groundLayer);
-
-        FloorTileController floorTile = tileHit.collider.GetComponent<FloorTileController>();
+        FloorTileController floorTile = GetTileBelow().GetComponent<FloorTileController>();
         if (floorTile != null)
         {
             floorTile.Heal();
         }
+    }
+
+    public GameObject GetTileBelow()
+    {
+        Ray topdown = new Ray(gameObject.transform.position, Vector3.down);
+        RaycastHit tileHit;
+        Physics.Raycast(topdown, out tileHit, 100f, groundLayer);
+        return tileHit.collider.gameObject;
     }
 
     public void SetContinuousAttack(bool value)
