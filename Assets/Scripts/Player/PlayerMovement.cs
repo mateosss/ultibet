@@ -28,9 +28,6 @@ public class PlayerMovement : MonoBehaviour
     public GameObject pathNodeDisplay;
     public int maxJumps = 2;
 
-    [Header("Particles")]
-    public ParticleSystem jumpParticles;
-
     // Overdrive
 
     [Header("Overdrive")]
@@ -64,7 +61,7 @@ public class PlayerMovement : MonoBehaviour
     // General
     Transform player;
     Rigidbody rb;
-    PlayerAnimation playerAnimation;
+    PlayerDisplay playerDisplay;
     PlayerAttack playerAttack;
     Camera cam;
     CameraShake cameraShake;
@@ -85,7 +82,7 @@ public class PlayerMovement : MonoBehaviour
     {
         player = GetComponent<Transform>();
         rb = GetComponent<Rigidbody>();
-        playerAnimation = GetComponent<PlayerAnimation>();
+        playerDisplay = GetComponent<PlayerDisplay>();
         playerAttack = GetComponent<PlayerAttack>();
         cam = Camera.main;
         cameraShake = cam.GetComponent<CameraShake>();
@@ -95,7 +92,7 @@ public class PlayerMovement : MonoBehaviour
         getUpFromFloor.enabled = false;
         pathCurveRenderer = Camera.main.GetComponent<CurvedLineRenderer>();
 
-        playerMaterial = playerAnimation.displayObject.GetComponentsInChildren<Renderer>()[1].material;
+        playerMaterial = playerDisplay.displayObject.GetComponentsInChildren<Renderer>()[1].material;
         defaultSkin = playerMaterial.mainTexture;
         CurrentJump = 0;
         DistanceTravelled = 0f;
@@ -297,7 +294,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 target = GetWithDefaultY(targetLocation);
         if (dashTimer == 0)
         {
-            if (PathStep <= path.Count) playerAnimation.Dash();
+            if (PathStep <= path.Count) playerDisplay.Dash();
             ShakeCamera();
         }
         dashTimer += Time.deltaTime;
@@ -314,9 +311,8 @@ public class PlayerMovement : MonoBehaviour
     {
         shouldJump = false;
         rb.velocity = Vector3.up * jump;
-        playerAnimation.Jump();
+        playerDisplay.Jump();
         CurrentJump++;
-        jumpParticles.Play();
     }
 
     void CheckJumpFinish()
@@ -324,7 +320,6 @@ public class PlayerMovement : MonoBehaviour
         if (IsOnPlatform()) // Jump finished
         {
             CurrentJump = 0;
-            StartCoroutine(Delay(jumpParticles.Play, 0.1f));
         }
     }
 
@@ -334,7 +329,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!running && !overdriving)
         {
-            playerAnimation.Run();
+            playerDisplay.Run();
             stopPathButton.SetActive(true);
         }
 
@@ -378,7 +373,7 @@ public class PlayerMovement : MonoBehaviour
         pathDistanceDrawn = 0f;
         running = false;
         playerAttack.SetContinuousAttack(false);
-        playerAnimation.Still();
+        playerDisplay.Still();
         stopPathButton.SetActive(false);
     }
 
