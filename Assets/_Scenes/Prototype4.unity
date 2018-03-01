@@ -1079,6 +1079,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 5b24035f623d40c4c912e6c975cf912b, type: 2}
+    - target: {fileID: 100000, guid: c66674fb0d8db0f45a0013976d209c2a, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c66674fb0d8db0f45a0013976d209c2a, type: 3}
   m_IsPrefabParent: 0
@@ -7177,7 +7181,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1442125151}
   - component: {fileID: 1442125150}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Stones
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12458,7 +12462,7 @@ Transform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1997491238}
-  m_LocalRotation: {x: -0.5049704, y: -0.36718854, z: -0.5465319, w: 0.5581042}
+  m_LocalRotation: {x: -0.50497043, y: -0.36718857, z: -0.546532, w: 0.5581043}
   m_LocalPosition: {x: -2.7939677e-11, y: 0.0041487995, z: -3.72529e-10}
   m_LocalScale: {x: 0.99999994, y: 0.9999999, z: 0.99999994}
   m_Children:
