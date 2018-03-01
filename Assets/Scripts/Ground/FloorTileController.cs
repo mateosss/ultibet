@@ -23,7 +23,6 @@ public class FloorTileController : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("AMHERE;");
         if (!isDamaged)
         {
             if (other.gameObject.tag == "Enemy" || other == playerCollider)

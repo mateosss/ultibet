@@ -245,7 +245,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 0
-  randomSeed: -2141588565
+  randomSeed: -2056492778
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3688,7 +3688,7 @@ GameObject:
   - component: {fileID: 30993664}
   - component: {fileID: 30993663}
   m_Layer: 0
-  m_Name: AttackRangeFloor
+  m_Name: FloorAttackParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3808,7 +3808,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1770742765
+  randomSeed: -350466285
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -12567,7 +12567,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1039023603
+  randomSeed: -411031412
   InitialModule:
     serializedVersion: 3
     enabled: 1
