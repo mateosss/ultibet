@@ -11895,7 +11895,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wave: 1
-  spawnTime: 1
+  spawnTime: 0.1
   timeBetweenWaves: 5
   enemy: {fileID: 1042468224972500, guid: e7c2294c878c9b64f8c49bfe76243cac, type: 2}
   waveText: {fileID: 1299419246}
@@ -18971,6 +18971,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 23547712786367998, guid: 88ace0da93c8b1643be3fcf38099f1a7,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 88ace0da93c8b1643be3fcf38099f1a7, type: 2}
   m_IsPrefabParent: 0
@@ -23305,7 +23310,7 @@ Transform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1997491238}
-  m_LocalRotation: {x: -0.5049704, y: -0.36718854, z: -0.5465319, w: 0.5581042}
+  m_LocalRotation: {x: -0.50497043, y: -0.36718857, z: -0.546532, w: 0.5581043}
   m_LocalPosition: {x: -2.7939677e-11, y: 0.0041487995, z: -3.72529e-10}
   m_LocalScale: {x: 0.99999994, y: 0.9999999, z: 0.99999994}
   m_Children:
