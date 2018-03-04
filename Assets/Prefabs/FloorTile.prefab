@@ -172,6 +172,8 @@ MonoBehaviour:
   groupName: TileHeal
   clips:
   - {fileID: 8300000, guid: 435f5f0b33bbefe4cb1c1026dbe4ec43, type: 3}
+  - {fileID: 8300000, guid: d5c2f03e5a6a65c458a609ec533bcfeb, type: 3}
+  - {fileID: 8300000, guid: e3785a0cbb4c6ad4ba31ebef0dd4fad1, type: 3}
 --- !u!114 &114326469807729922
 MonoBehaviour:
   m_ObjectHideFlags: 1
