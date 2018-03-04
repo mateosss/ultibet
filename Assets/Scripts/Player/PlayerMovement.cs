@@ -68,6 +68,7 @@ public class PlayerMovement : MonoBehaviour
     CurvedLineRenderer pathCurveRenderer;
     Material playerMaterial;
     Texture defaultSkin;
+    RandomSound playerSound;
     const float camRayLength = 100f;
     float defaultY;
     int nodeLayer;
@@ -91,6 +92,7 @@ public class PlayerMovement : MonoBehaviour
         getUpFromFloor = GetComponent<GetUpFromFloor>();
         getUpFromFloor.enabled = false;
         pathCurveRenderer = Camera.main.GetComponent<CurvedLineRenderer>();
+        playerSound = GetComponent<RandomSound>();
 
         playerMaterial = playerDisplay.displayObject.GetComponentsInChildren<Renderer>()[1].material;
         defaultSkin = playerMaterial.mainTexture;
@@ -309,6 +311,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Jump()
     {
+        playerSound.Play();
         shouldJump = false;
         rb.velocity = Vector3.up * jump;
         playerDisplay.Jump();

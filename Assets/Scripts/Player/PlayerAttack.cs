@@ -13,6 +13,7 @@ public class PlayerAttack : MonoBehaviour {
     PlayerDisplay playerDisplay;
     PlayerMovement playerMovement;
     BoxCollider attackCollider;
+    RandomSound playerSound;
     float impactTimer = 0f;
     public float CooldownTimer { get; private set; }
     int groundLayer;
@@ -21,6 +22,7 @@ public class PlayerAttack : MonoBehaviour {
         playerDisplay = GetComponent<PlayerDisplay>();
         playerMovement = GetComponent<PlayerMovement>();
         attackCollider = GetComponents<BoxCollider>()[1];
+        playerSound = GetComponent<RandomSound>();
         groundLayer = LayerMask.GetMask("Ground");
 
         CooldownTimer = cooldown;
@@ -64,6 +66,7 @@ public class PlayerAttack : MonoBehaviour {
 
     public void Attack()
     {
+        playerSound.Play();
         CooldownTimer = 0f;
         playerDisplay.Attack();
         attackRangeDisplayAnimator.SetTrigger("Attack");

@@ -40,6 +40,8 @@ GameObject:
   - component: {fileID: 65141732930017458}
   - component: {fileID: 23547712786367998}
   - component: {fileID: 114034342206900772}
+  - component: {fileID: 114326469807729922}
+  - component: {fileID: 114037785147487336}
   m_Layer: 8
   m_Name: FloorTile
   m_TagString: Untagged
@@ -156,6 +158,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDamaged: 0
+--- !u!114 &114037785147487336
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1891257593264022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7817f829b1ebca469d3a49b15b8597f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groupName: TileHeal
+  clips:
+  - {fileID: 8300000, guid: 435f5f0b33bbefe4cb1c1026dbe4ec43, type: 3}
+--- !u!114 &114326469807729922
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1891257593264022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7817f829b1ebca469d3a49b15b8597f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groupName: TileDamage
+  clips:
+  - {fileID: 8300000, guid: b4184e9fa7b365548bac0f95786f8be0, type: 3}
+  - {fileID: 8300000, guid: 6977850a73e3c6d41933342d411c4dab, type: 3}
+  - {fileID: 8300000, guid: fa332fb19496a22499882eb40fee5561, type: 3}
+  - {fileID: 8300000, guid: b4fd1fb90d040df41a93b98445317a43, type: 3}
+  - {fileID: 8300000, guid: 39e279fcce9c9ff4490bc27548b02d3b, type: 3}
+  - {fileID: 8300000, guid: ff6ce16cff3c3cc41be58e5d8445d407, type: 3}
 --- !u!212 &212987852580401874
 SpriteRenderer:
   m_ObjectHideFlags: 1

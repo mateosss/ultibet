@@ -26,6 +26,7 @@ GameObject:
   - component: {fileID: 114504296164843898}
   - component: {fileID: 114972577846893688}
   - component: {fileID: 54342853327966386}
+  - component: {fileID: 114478199816758340}
   m_Layer: 12
   m_Name: Enemy
   m_TagString: Enemy
@@ -397,6 +398,23 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114478199816758340
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1042468224972500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7817f829b1ebca469d3a49b15b8597f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groupName: FrogDead
+  clips:
+  - {fileID: 8300000, guid: 3a5b23b4f0c8633428f2a6858da824ff, type: 3}
+  - {fileID: 8300000, guid: 3ec67d94fbb30e44190cb42526b491c9, type: 3}
+  - {fileID: 8300000, guid: fbcd8b45eee85c44597b66927837f1ad, type: 3}
+  - {fileID: 8300000, guid: 5dba66e5ab4e60d44985e7fdbd159510, type: 3}
 --- !u!114 &114504296164843898
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -9,6 +9,8 @@ public class FloorTileController : MonoBehaviour {
     BoxCollider playerAttackCollider;
     PlayerMovement playerMovement;
     Animator anim;
+    RandomSound damageSound;
+    RandomSound healSound;
 
     public bool isDamaged = false;
 
@@ -19,6 +21,8 @@ public class FloorTileController : MonoBehaviour {
         playerAttackCollider = player.GetComponents<BoxCollider>()[1];
         playerMovement = player.GetComponent<PlayerMovement>();
         anim = GetComponentInChildren<Animator>();
+        damageSound = GetComponents<RandomSound>()[0];
+        healSound = GetComponents<RandomSound>()[1];
     }
 
     private void OnTriggerEnter(Collider other)
@@ -44,6 +48,7 @@ public class FloorTileController : MonoBehaviour {
     {
         if (!isDamaged)
         {
+            damageSound.Play();
             isDamaged = true;
             anim.SetTrigger("Damage");
         }
@@ -53,6 +58,7 @@ public class FloorTileController : MonoBehaviour {
     {
         if (isDamaged)
         {
+            healSound.Play();
             isDamaged = false;
             anim.SetTrigger("Heal");
         }
