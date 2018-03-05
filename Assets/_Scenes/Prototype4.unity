@@ -9692,7 +9692,7 @@ MonoBehaviour:
   maxPathDistanceMultiplier: 1
   maxPathDistanceBonusPerKill: 0.1
   stopPathButton: {fileID: 1260353354}
-  isLongPathFrom: 5
+  isLongPathFrom: 2
   cooldownBPS: 0.1
   rangeBPS: 0.5
   overdriveBPS: 0.06
@@ -9703,6 +9703,7 @@ MonoBehaviour:
   maxJumps: 2
   overdriveButton: {fileID: 381917745}
   overdriveSkin: {fileID: 2800000, guid: 2728556218547e44a904096a9d3939cd, type: 3}
+  overdriveVignette: {fileID: 977370716}
   maxOverdriveDistance: 50
   dashDuration: 0.2
   overdriving: 0
@@ -11467,6 +11468,92 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -10.003355, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &977370714
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 977370715}
+  - component: {fileID: 977370718}
+  - component: {fileID: 977370717}
+  - component: {fileID: 977370716}
+  m_Layer: 5
+  m_Name: Vignette
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &977370715
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 977370714}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1745140500}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1920, y: 1080}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!95 &977370716
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 977370714}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 55b19d4417109584b876dfd3d17c08f7, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &977370717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 977370714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 21300000, guid: 970cc7ccc56780940b09b6e9faae27b2, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+--- !u!222 &977370718
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 977370714}
 --- !u!1 &978728803
 GameObject:
   m_ObjectHideFlags: 0
@@ -18725,6 +18812,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 1358632505}
+  - {fileID: 977370715}
   m_Father: {fileID: 2141988820}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -19020,7 +19108,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: c7951b13550d3354f971ad8068384aeb, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.7
   m_Pitch: 1
   Loop: 1
@@ -23170,6 +23258,8 @@ GameObject:
   - component: {fileID: 1930600720}
   - component: {fileID: 1930600727}
   - component: {fileID: 1930600728}
+  - component: {fileID: 1930600729}
+  - component: {fileID: 1930600730}
   m_Layer: 11
   m_Name: Player
   m_TagString: Player
@@ -23396,6 +23486,38 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 525fd85f1836281429a360316499f617, type: 3}
   - {fileID: 8300000, guid: 5b22a0ba9327e1e46a73d3926992655d, type: 3}
   - {fileID: 8300000, guid: bbbcf81526fbbb248a5780dc8a7130ee, type: 3}
+--- !u!114 &1930600729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1930600719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7817f829b1ebca469d3a49b15b8597f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groupName: OverdriveCharged
+  clips:
+  - {fileID: 8300000, guid: 8f71f9d111670334796aee4ddc4dbab8, type: 3}
+  - {fileID: 8300000, guid: 5f1fcb7ca4dfdbc41a323ee32f65e7bc, type: 3}
+--- !u!95 &1930600730
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1930600719}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1584ba90e29426042bb4d6eaad169188, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &1938674488
 GameObject:
   m_ObjectHideFlags: 0

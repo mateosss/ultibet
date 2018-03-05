@@ -9,13 +9,15 @@ public class AudioManager : MonoBehaviour {
     public static AudioManager instance;
 
     AudioSource source;
-
+    AudioSource musicSource;
     private void Awake()
     {
         if (instance != null) return;
         instance = this;
         DontDestroyOnLoad(gameObject);
-        source = GetComponent<AudioSource>();
+        source = GetComponents<AudioSource>()[0];
+        musicSource = GetComponents<AudioSource>()[1];
+        musicSource.Play();
     }
 
     public void Play(AudioClip clip, bool loop = false, float volume = 1f)

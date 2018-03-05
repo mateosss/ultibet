@@ -33,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Overdrive")]
     public GameObject overdriveButton;
     public Texture overdriveSkin;
+    public Animator overdriveVignette;
     public float maxOverdriveDistance = 50f;
     public float dashDuration = 0.2f;
     public bool overdriving = false;
@@ -69,6 +70,7 @@ public class PlayerMovement : MonoBehaviour
     Material playerMaterial;
     Texture defaultSkin;
     RandomSound playerSound;
+    RandomSound overdriveSound;
     const float camRayLength = 100f;
     float defaultY;
     int nodeLayer;
@@ -92,7 +94,8 @@ public class PlayerMovement : MonoBehaviour
         getUpFromFloor = GetComponent<GetUpFromFloor>();
         getUpFromFloor.enabled = false;
         pathCurveRenderer = Camera.main.GetComponent<CurvedLineRenderer>();
-        playerSound = GetComponent<RandomSound>();
+        playerSound = GetComponents<RandomSound>()[0];
+        overdriveSound = GetComponents<RandomSound>()[1];
 
         playerMaterial = playerDisplay.displayObject.GetComponentsInChildren<Renderer>()[1].material;
         defaultSkin = playerMaterial.mainTexture;
@@ -129,20 +132,18 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (overdriving && Input.GetButtonDown("Fire1") && !running) // Overdrive input
+        if (overdriving && Input.GetButtonDown("Fire1")) // Overdrive input
         {
             GameObject node = NodeTouchedByMouse();
             if (node)
             {
                 overdriveDistanceDrawn += Vector3.Distance(node.transform.position, path[path.Count - 1].transform.position);
-                if (overdriveDistanceDrawn < maxOverdriveDistance)
-                {
-                    AddToPath(node.transform.position);
-                }
-                else
+                AddToPath(node.transform.position);
+                StartPath();
+
+                if (overdriveDistanceDrawn > maxOverdriveDistance)
                 {
                     endOverdrive = true;
-                    StartPath();
                 }
                 
             }
@@ -275,10 +276,13 @@ public class PlayerMovement : MonoBehaviour
             overdriveDistanceDrawn = 0f;
             endOverdrive = false;
             playerMaterial.mainTexture = defaultSkin;
+            overdriveVignette.SetTrigger("OverdriveOff");
         }
         else
         {
             playerMaterial.mainTexture = overdriveSkin;
+            overdriveSound.Play();
+            overdriveVignette.SetTrigger("OverdriveOn");
         }
     }
 
@@ -298,6 +302,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (PathStep <= path.Count) playerDisplay.Dash();
             ShakeCamera();
+            playerSound.Play();
         }
         dashTimer += Time.deltaTime;
 
