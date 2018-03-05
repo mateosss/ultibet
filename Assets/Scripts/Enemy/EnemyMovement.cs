@@ -26,4 +26,10 @@ public class EnemyMovement : MonoBehaviour {
             nav.SetDestination(floorTiles[Random.Range(0, floorTiles.Length)]);
         }
     }
+
+    public void Stop()
+    {
+        nav.isStopped = true;
+        enabled = false;
+    }
 }

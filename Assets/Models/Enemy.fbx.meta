@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: f90285316b7bb8747a42a0c75eb5591b
-timeCreated: 1520083697
+guid: 8015e3c5e69db224e9367fb1054a92c1
+timeCreated: 1520256958
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
@@ -19,8 +19,10 @@ ModelImporter:
     400010: strech_B
     2100000: monster_texture
     4300000: monster_low
-    7400000: monster_walk
-    7400002: monster_rig|monster_walk
+    7400000: monster_rig|Action
+    7400002: monster_rig|monster_death
+    7400004: monster_rig|monster_walk
+    7400006: monster_rig|monster_walkB
     9500000: //RootNode
     13700000: monster_low
   externalObjects: {}
@@ -51,17 +53,45 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: monster_walk
-      takeName: monster_walk
+      name: monster_rig|Action
+      takeName: monster_rig|Action
       firstFrame: 0
-      lastFrame: 36
+      lastFrame: 1
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: monster_rig|monster_death
+      takeName: monster_rig|monster_death
+      firstFrame: 0
+      lastFrame: 39
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -82,7 +112,35 @@ ModelImporter:
       name: monster_rig|monster_walk
       takeName: monster_rig|monster_walk
       firstFrame: 0
-      lastFrame: 36
+      lastFrame: 34
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: monster_rig|monster_walkB
+      takeName: monster_rig|monster_walkB
+      firstFrame: 0
+      lastFrame: 17
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

@@ -9692,7 +9692,7 @@ MonoBehaviour:
   maxPathDistanceMultiplier: 1
   maxPathDistanceBonusPerKill: 0.1
   stopPathButton: {fileID: 1260353354}
-  isLongPathFrom: 15
+  isLongPathFrom: 5
   cooldownBPS: 0.1
   rangeBPS: 0.5
   overdriveBPS: 0.06
@@ -10570,6 +10570,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f42232c1cfd3014cafe89db2af43cea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &793426780
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4496784763593578, guid: e7c2294c878c9b64f8c49bfe76243cac, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -3.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 4496784763593578, guid: e7c2294c878c9b64f8c49bfe76243cac, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0.48
+      objectReference: {fileID: 0}
+    - target: {fileID: 4496784763593578, guid: e7c2294c878c9b64f8c49bfe76243cac, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -4.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4496784763593578, guid: e7c2294c878c9b64f8c49bfe76243cac, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4496784763593578, guid: e7c2294c878c9b64f8c49bfe76243cac, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4496784763593578, guid: e7c2294c878c9b64f8c49bfe76243cac, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4496784763593578, guid: e7c2294c878c9b64f8c49bfe76243cac, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4496784763593578, guid: e7c2294c878c9b64f8c49bfe76243cac, type: 2}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: e7c2294c878c9b64f8c49bfe76243cac, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &802231076
 GameObject:
   m_ObjectHideFlags: 0
@@ -23445,7 +23487,7 @@ Transform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1997491238}
-  m_LocalRotation: {x: -0.50497043, y: -0.36718857, z: -0.546532, w: 0.5581043}
+  m_LocalRotation: {x: -0.5049704, y: -0.36718854, z: -0.5465319, w: 0.5581042}
   m_LocalPosition: {x: -2.7939677e-11, y: 0.0041487995, z: -3.72529e-10}
   m_LocalScale: {x: 0.99999994, y: 0.9999999, z: 0.99999994}
   m_Children:
