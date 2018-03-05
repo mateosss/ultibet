@@ -34,6 +34,7 @@ public class PlayerMovement : MonoBehaviour
     public GameObject overdriveButton;
     public Texture overdriveSkin;
     public Animator overdriveVignette;
+    public ParticleSystem overdriveParticles;
     public float maxOverdriveDistance = 50f;
     public float dashDuration = 0.2f;
     public bool overdriving = false;
@@ -280,6 +281,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+            overdriveParticles.Play();
             playerMaterial.mainTexture = overdriveSkin;
             overdriveSound.Play();
             overdriveVignette.SetTrigger("OverdriveOn");
