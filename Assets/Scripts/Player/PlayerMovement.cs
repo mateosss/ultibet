@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     public float maxPathDistanceMultiplier = 1f;
     public float maxPathDistanceBonusPerKill = 0.1f;
     public GameObject stopPathButton;
+    public Button jumpButton;
 
     [Header("Long Path Bonus (BPS = Bonus per second)")]
     public float isLongPathFrom = 15f;
@@ -279,15 +281,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!overdriving && (CurrentJump < maxJumps || onGround)) // Should Jump if possible
         {
-            if (pauseJump) // If jump was paused with attack, jump afterwards
-            {
-                shouldJump = true;
-            }
-            else
-            {
-                Jump();
-            }
-
+            if (pauseJump) shouldJump = true; // If jump was paused with attack, jump afterwards
+            else Jump();                
         }
     }
 
@@ -298,6 +293,7 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = Vector3.up * jump;
         playerDisplay.Jump();
         CurrentJump++;
+        if (CurrentJump >= maxJumps) jumpButton.interactable = false;
     }
 
     void CheckJumpFinish()
@@ -305,6 +301,7 @@ public class PlayerMovement : MonoBehaviour
         if (IsOnPlatform()) // Jump finished
         {
             CurrentJump = 0;
+            jumpButton.interactable = true;
         }
     }
 
@@ -392,6 +389,7 @@ public class PlayerMovement : MonoBehaviour
         PathDistanceFromLastFalling = 0f;
         getUpFromFloor.enabled = true;
         CurrentJump = 0;
+        jumpButton.interactable = true;
     }
 
     public bool IsOnGround()
@@ -423,10 +421,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rb.useGravity = true;
         pauseJump = false;
-        if (shouldJump)
-        {
-            Jump();
-        }
+        if (shouldJump) Jump();
     }
 
     IEnumerator JumpAttack()
@@ -478,7 +473,9 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //Debug.DrawRay(player.position, Vector3.down, Color.yellow);
-        return Physics.BoxCast(player.position, Vector3.one * 0.5f, Vector3.down, Quaternion.identity, player.localScale.z, platformLayer);
+        Vector3 origin = player.position; // Quirk to make the boxcast work when the player is standing on the platform touching face to face
+        origin.y += 0.1f;
+        return Physics.BoxCast(origin, Vector3.one * 0.5f, Vector3.down, Quaternion.identity, player.localScale.z, platformLayer);
         //Ray topdown = new Ray(player.position, Vector3.down);
         //RaycastHit platformHit;
         //Physics.Raycast(topdown, out platformHit, player.localScale.z, platformLayer);

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerAttack : MonoBehaviour {
 
@@ -8,6 +9,7 @@ public class PlayerAttack : MonoBehaviour {
     public float cooldown = 1f; // Cooldown between attacks
     public float range = 4f;
     public Animator healLineDisplayAnimator;
+    public Button attackButton;
 
     PlayerDisplay playerDisplay;
     PlayerMovement playerMovement;
@@ -43,6 +45,11 @@ public class PlayerAttack : MonoBehaviour {
         {
             impactTimer += Time.deltaTime;
         }
+
+        if (CooldownTimer > cooldown && !attackButton.interactable)
+        {
+            attackButton.interactable = true;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -60,7 +67,11 @@ public class PlayerAttack : MonoBehaviour {
 
     public void AttackInput()
     {
-        if (CooldownTimer > cooldown) Attack();
+        if (CooldownTimer > cooldown)
+        {
+            Attack();
+            attackButton.interactable = false;
+        }
     }
 
     public void Attack()
@@ -70,18 +81,12 @@ public class PlayerAttack : MonoBehaviour {
         playerDisplay.Attack();
         healLineDisplayAnimator.SetTrigger("Attack");
 
-        if (playerMovement.CurrentJump > 0 && playerMovement.CurrentJump < playerMovement.maxJumps)
-        {
-            playerMovement.PauseJump();
-        }
+        if (playerMovement.CurrentJump > 0 && playerMovement.CurrentJump < playerMovement.maxJumps) playerMovement.PauseJump();
 
         attackCollider.enabled = true;
 
         FloorTileController floorTile = GetTileBelow().GetComponent<FloorTileController>();
-        if (floorTile != null)
-        {
-            floorTile.Heal();
-        }
+        if (floorTile != null) floorTile.Heal();
     }
 
     public GameObject GetTileBelow()

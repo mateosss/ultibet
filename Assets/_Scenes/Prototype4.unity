@@ -9092,6 +9092,7 @@ MonoBehaviour:
   maxPathDistanceMultiplier: 1
   maxPathDistanceBonusPerKill: 0.1
   stopPathButton: {fileID: 1260353354}
+  jumpButton: {fileID: 1270498831}
   isLongPathFrom: 2
   cooldownBPS: 0.1
   rangeBPS: 0.5
@@ -21239,7 +21240,7 @@ AudioSource:
   m_PlayOnAwake: 0
   m_Volume: 0.7
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -28773,6 +28774,7 @@ MonoBehaviour:
   cooldown: 1
   range: 4
   healLineDisplayAnimator: {fileID: 475265051}
+  attackButton: {fileID: 381917747}
 --- !u!114 &1930600722
 MonoBehaviour:
   m_ObjectHideFlags: 0
