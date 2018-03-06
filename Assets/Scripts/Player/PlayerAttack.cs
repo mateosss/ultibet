@@ -7,7 +7,6 @@ public class PlayerAttack : MonoBehaviour {
     public float impactTime = 0.2f; // The time after the attack during which it destroys enemies
     public float cooldown = 1f; // Cooldown between attacks
     public float range = 4f;
-    public Animator attackRangeDisplayAnimator;
     public Animator healLineDisplayAnimator;
 
     PlayerDisplay playerDisplay;
@@ -32,11 +31,6 @@ public class PlayerAttack : MonoBehaviour {
 
     void Update()
     {
-        if (CooldownTimer > cooldown && ((playerMovement.IsRunning() && (Input.GetButtonDown("Fire1")) && Input.mousePosition.x > Screen.width / 2) || Input.GetButtonDown("Fire3"))) // Attack
-        {
-            Attack();
-        }
-
         CooldownTimer += Time.deltaTime;
         
         if (impactTimer >= impactTime) // attackCollider time of presence
@@ -64,12 +58,16 @@ public class PlayerAttack : MonoBehaviour {
         }
     }
 
+    public void AttackInput()
+    {
+        if (CooldownTimer > cooldown) Attack();
+    }
+
     public void Attack()
     {
         playerSound.Play();
         CooldownTimer = 0f;
         playerDisplay.Attack();
-        attackRangeDisplayAnimator.SetTrigger("Attack");
         healLineDisplayAnimator.SetTrigger("Attack");
 
         if (playerMovement.CurrentJump > 0 && playerMovement.CurrentJump < playerMovement.maxJumps)
@@ -103,7 +101,6 @@ public class PlayerAttack : MonoBehaviour {
     {
         range = newRange;
         attackCollider.size = new Vector3(range, 10f, range);
-        attackRangeDisplayAnimator.transform.parent.transform.localScale = new Vector3(1, 0, 1) * (range / 4f) + Vector3.up;
     }
 
 }

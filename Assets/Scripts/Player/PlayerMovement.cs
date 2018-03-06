@@ -31,9 +31,9 @@ public class PlayerMovement : MonoBehaviour
     // Overdrive
 
     [Header("Overdrive")]
-    public GameObject overdriveButton;
     public Texture overdriveSkin;
     public Animator overdriveVignette;
+    public Animator hudAnim;
     public ParticleSystem overdriveParticles;
     public float maxOverdriveDistance = 50f;
     public float dashDuration = 0.2f;
@@ -120,9 +120,9 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (!pauseJump && !overdriving && Input.GetButton("Fire1") && !running) // Input: Add node to path
+        if (!pauseJump && !overdriving && IsPointerPressing() && !running) // Input: Add node to path
         {
-            GameObject node = NodeTouchedByMouse();
+            GameObject node = NodeTouchedByPointer();
             if (node)
             {
                 if (pathDistanceDrawn < maxPathDistance * maxPathDistanceMultiplier)
@@ -133,9 +133,9 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (overdriving && Input.GetButtonDown("Fire1")) // Overdrive input
+        if (overdriving && IsPointerDown()) // Overdrive input
         {
-            GameObject node = NodeTouchedByMouse();
+            GameObject node = NodeTouchedByPointer();
             if (node)
             {
                 overdriveDistanceDrawn += Vector3.Distance(node.transform.position, path[path.Count - 1].transform.position);
@@ -150,57 +150,15 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (!pauseJump && !overdriving && Input.GetButtonUp("Fire1") && !running) // Start path
-        {
-            if (path.Count > 1) // Path stroke has started
-            {
-                StartPath();
-            }
-            else
-            {
-                if (TouchingLeftSide())
-                {
-                    if (CurrentJump < maxJumps || onGround)
-                    {
-                        Jump();
-                    }
-                }
-                else
-                {
-                    if (playerAttack.CooldownTimer > playerAttack.cooldown)
-                    {
-                        playerAttack.Attack();
-                    }    
-                }
-            }
-        }
-        
-        if (running && !overdriving && (shouldJump || (Input.GetButtonDown("Fire1") && TouchingLeftSide() || Input.GetButtonDown("Jump"))) && (CurrentJump < maxJumps || onGround)) // Jump
-        {
-            if (pauseJump)
-            {
-                shouldJump = true;
-            }
-            else
-            {
-                Jump();
-            }
-            
-        }
-        else if (CurrentJump > 0)
-        {
-            CheckJumpFinish();
-        }
+        if (!pauseJump && !overdriving && IsPointerUp() && !running && path.Count > 1) StartPath();
 
-        if (!overdriving && !running && OverdriveCharge >= 1) // Activate overdrive
-        {
-            SetOverdrive(true);
-        }
+        if (Input.GetButtonDown("Jump")) JumpInput();
 
-        if (overdriving && !running && endOverdrive)
-        {
-            SetOverdrive(false);
-        }
+        if (CurrentJump > 0) CheckJumpFinish();
+
+        if (!overdriving && !running && OverdriveCharge >= 1) SetOverdrive(true);
+
+        if (overdriving && !running && endOverdrive) SetOverdrive(false);
     }
 
     private void FixedUpdate()
@@ -270,21 +228,22 @@ public class PlayerMovement : MonoBehaviour
     void SetOverdrive(bool active)
     {
         overdriving = active;
-        overdriveButton.SetActive(active);
-        if (!active)
+        if (active)
+        {
+            overdriveParticles.Play();
+            playerMaterial.mainTexture = overdriveSkin;
+            overdriveSound.Play();
+            overdriveVignette.SetTrigger("OverdriveOn");
+            hudAnim.SetTrigger("OverdriveOn");
+        }
+        else
         {
             OverdriveCharge = 0f;
             overdriveDistanceDrawn = 0f;
             endOverdrive = false;
             playerMaterial.mainTexture = defaultSkin;
             overdriveVignette.SetTrigger("OverdriveOff");
-        }
-        else
-        {
-            overdriveParticles.Play();
-            playerMaterial.mainTexture = overdriveSkin;
-            overdriveSound.Play();
-            overdriveVignette.SetTrigger("OverdriveOn");
+            hudAnim.SetTrigger("OverdriveOff");
         }
     }
 
@@ -314,6 +273,22 @@ public class PlayerMovement : MonoBehaviour
         PathDistance += move.magnitude;
         DistanceTravelled += move.magnitude;
         //overdriveDistance += move.magnitude;
+    }
+
+    public void JumpInput()
+    {
+        if (!overdriving && (CurrentJump < maxJumps || onGround)) // Should Jump if possible
+        {
+            if (pauseJump) // If jump was paused with attack, jump afterwards
+            {
+                shouldJump = true;
+            }
+            else
+            {
+                Jump();
+            }
+
+        }
     }
 
     public void Jump()
@@ -448,6 +423,10 @@ public class PlayerMovement : MonoBehaviour
     {
         rb.useGravity = true;
         pauseJump = false;
+        if (shouldJump)
+        {
+            Jump();
+        }
     }
 
     IEnumerator JumpAttack()
@@ -482,17 +461,9 @@ public class PlayerMovement : MonoBehaviour
         return new Vector3(t.x, defaultY, t.z);
     }
 
-    Vector3 MouseToPoint()
+    GameObject NodeTouchedByPointer()
     {
-        Ray camRay = cam.ScreenPointToRay(Input.mousePosition);
-        RaycastHit floorHit;
-        Physics.Raycast(camRay, out floorHit, camRayLength, nodeLayer);
-        return floorHit.point;
-    }
-
-    GameObject NodeTouchedByMouse()
-    {
-        Ray camRay = cam.ScreenPointToRay(Input.mousePosition);
+        Ray camRay = cam.ScreenPointToRay(PointerPosition());
         RaycastHit floorHit;
         Physics.Raycast(camRay, out floorHit, camRayLength, nodeLayer);
         if (!floorHit.collider) return null;
@@ -530,7 +501,7 @@ public class PlayerMovement : MonoBehaviour
 
     bool TouchingLeftSide()
     {
-        return Input.mousePosition.x < Screen.width / 2;
+        return PointerPosition().x < Screen.width / 2;
     }
 
     public bool IsDrawingPath()
@@ -547,5 +518,29 @@ public class PlayerMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(seconds);
         function();
+    }
+
+    bool IsPointerPressing()
+    {
+        if (Input.touchCount > 0) return Input.GetTouch(0).phase < TouchPhase.Ended;
+        else return Input.GetButton("Fire1");
+    }
+
+    bool IsPointerDown()
+    {
+        if (Input.touchCount > 0) return Input.GetTouch(0).phase == TouchPhase.Began;
+        else return Input.GetButtonDown("Fire1");
+    }
+
+    bool IsPointerUp()
+    {
+        if (Input.touchCount > 0) return Input.GetTouch(0).phase > TouchPhase.Stationary;
+        else return Input.GetButtonUp("Fire1");
+    }
+
+    Vector2 PointerPosition()
+    {
+        if (Input.touchCount > 0) return Input.GetTouch(0).position;
+        else return Input.mousePosition;
     }
 }
