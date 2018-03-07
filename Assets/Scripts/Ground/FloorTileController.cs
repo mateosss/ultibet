@@ -27,38 +27,32 @@ public class FloorTileController : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!isDamaged)
+        if (isDamaged)
         {
-            if (other.gameObject.tag == "Enemy" || other == playerCollider)
-            {
-                Damage();
-            }
+            if (playerMovement.overdriving && other == playerAttackCollider) Heal(true);
         }
-
-        if (playerMovement.overdriving)
+        else
         {
-            if (other == playerAttackCollider)
-            {
-                Heal();
-            }
+            if (other.gameObject.tag == "Enemy") Damage();
+            else if (other == playerCollider) Damage(true);
         }
     }
 
-    public void Damage()
+    public void Damage(bool playSound = false)
     {
         if (!isDamaged)
         {
-            damageSound.Play();
+            if (playSound) damageSound.Play();
             isDamaged = true;
             anim.SetTrigger("Damage");
         }
     }
 
-    public void Heal()
+    public void Heal(bool playSound = false)
     {
         if (isDamaged)
         {
-            healSound.Play();
+            if (playSound) healSound.Play();
             isDamaged = false;
             anim.SetTrigger("Heal");
         }
