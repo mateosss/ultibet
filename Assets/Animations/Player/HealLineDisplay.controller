@@ -5,7 +5,7 @@ AnimatorController:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: AttackRangeDisplay
+  m_Name: HealLineDisplay
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: Attack
@@ -82,7 +82,7 @@ AnimatorState:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: AttackRangeAttack
+  m_Name: HealLineAttack
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -95,7 +95,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 609295e5e2e7d6649b531a3f48a1ade3, type: 2}
+  m_Motion: {fileID: 7400000, guid: fea56b04cd6ce1542b94a9636fa6b1a7, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
