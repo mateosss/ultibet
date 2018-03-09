@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TutorialRestartOnFell : MonoBehaviour {
 
-    public Transform restartFrom;
+    public TutorialManager tutorial;
 
     PlayerMovement player;
 
@@ -15,7 +15,7 @@ public class TutorialRestartOnFell : MonoBehaviour {
 
     void Update () {
         if (player.IsOnGround()) {
-            player.transform.position = restartFrom.position;
+            player.transform.position = tutorial.StartPosition();
             player.ResetPath();
         }
 	}
