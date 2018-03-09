@@ -30,22 +30,20 @@ public class SpawnManager : MonoBehaviour {
     {
         while (true)
         {
-            if (currentWaveSpawnedEnemies < wave)
+            if (currentWaveSpawnedEnemies < wave * 3 - 2)
             {
                 Spawn();
                 currentWaveSpawnedEnemies++;
                 yield return new WaitForSeconds(spawnTime);
             }
-            else if (currentWaveKilledEnemies >= currentWaveSpawnedEnemies)
+            else
             {
-                wave += 3;
+                yield return new WaitForSeconds(timeBetweenWaves);
+                wave += 1;
+                Highscore.SetHighscore(wave);
                 waveText.text = "WAVE " + wave;
                 currentWaveSpawnedEnemies = 0;
                 currentWaveKilledEnemies = 0;
-                yield return new WaitForSeconds(timeBetweenWaves);
-            } else
-            {
-                yield return null;
             }
         }
     }

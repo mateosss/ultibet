@@ -9,6 +9,8 @@ public class EnemyHealth : MonoBehaviour {
     Animator anim;
     EnemyMovement enemyMovement;
 
+    bool dead = false;
+
     int maxSounds;
     static int playing = 0;
     static bool willReset;
@@ -24,16 +26,20 @@ public class EnemyHealth : MonoBehaviour {
 
     public void Death()
     {
-        anim.SetTrigger("Dead");
-        spawnManager.EnemyDied();
-        if (playing < maxSounds)
+        if (!dead)
         {
-            sound.Play();
-            playing++;
-            willReset = true;
+            anim.SetTrigger("Dead");
+            spawnManager.EnemyDied();
+            if (playing < maxSounds)
+            {
+                sound.Play();
+                playing++;
+                willReset = true;
+            }
+            enemyMovement.Stop();
+            Invoke("Destroy", 3);
+            dead = true;
         }
-        enemyMovement.Stop();
-        Invoke("Destroy", 3);
     }
 
     void Destroy()
