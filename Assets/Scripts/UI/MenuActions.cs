@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class MenuActions : MonoBehaviour {
 
@@ -9,19 +10,20 @@ public class MenuActions : MonoBehaviour {
     private void Awake()
     {
         sound = GetComponent<RandomSound>();
-        music = GameObject.Find("Audio").GetComponents<AudioSource>()[1];
+        music = GameObject.Find("Audio").GetComponents<AudioSource>().Last();
     }
 
     public void Play()
     {
         sound.Play();
         music.volume = 0.7f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene("Game");
     }
 
     public void Exit()
     {
-        Application.Quit();
+        SceneManager.LoadScene("MainMenu");
+        AudioManager.instance.CleanManager();
     }
 
 }

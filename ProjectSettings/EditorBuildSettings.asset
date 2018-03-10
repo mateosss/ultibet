@@ -11,3 +11,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Scenes/Game.unity
     guid: 2f4a59625e865da429c9b325a2e0926d
+  - enabled: 1
+    path: Assets/_Scenes/Tutorial.unity
+    guid: d7a1458b244d31542a74f6e0f06cb59b

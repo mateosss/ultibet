@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour {
@@ -12,7 +13,7 @@ public class GameManager : MonoBehaviour {
     void Awake()
     {
         sound = GetComponent<RandomSound>();
-        music = GameObject.Find("Audio").GetComponents<AudioSource>()[1];
+        music = GameObject.Find("Audio").GetComponents<AudioSource>().Last();
         Transform tiles = GameObject.Find("FloorTiles").transform;
         floorTiles = new FloorTileController[tiles.childCount];
         for (int i = 0; i < floorTiles.Length; i++)

@@ -8,8 +8,7 @@ public class EnemyHealth : MonoBehaviour {
     RandomSound sound;
     Animator anim;
     EnemyMovement enemyMovement;
-
-    bool dead = false;
+    public bool dead = false;
 
     int maxSounds;
     static int playing = 0;
@@ -49,6 +48,6 @@ public class EnemyHealth : MonoBehaviour {
             playing = 0;
             willReset = false;
         }
-        Destroy(gameObject);
+        if (!(enemyMovement is TutorialEnemy)) Destroy(gameObject);
     }
 }

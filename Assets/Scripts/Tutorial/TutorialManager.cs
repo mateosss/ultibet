@@ -1,9 +1,10 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class TutorialManager : MonoBehaviour {
 
-    int TOTAL_TUTORIALS = 2;
+    int TOTAL_TUTORIALS = 3;
 
     [Header("Objects")]
     public Text tutorialTitle;
@@ -34,7 +35,8 @@ public class TutorialManager : MonoBehaviour {
         originalRangeBPS = player.rangeBPS;
         originalOverdriveBPS = player.overdriveBPS;
         originalMaxPathDistance = player.maxPathDistance;
-        player.cooldownBPS = 0f;
+
+        player.cooldownBPS = 0f; // By default this stats are deactivated, should be activated on tutorial method, and reseted to 0
         player.rangeBPS = 0f;
         player.overdriveBPS = 0f;
     }
@@ -52,6 +54,11 @@ public class TutorialManager : MonoBehaviour {
     public Vector3 EndPosition()
     {
         return layouts[currentTutorial - 1].transform.Find("EndPosition").position;
+    }
+
+    public void ExitTutorial()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void PreviousTutorial()
@@ -76,6 +83,11 @@ public class TutorialManager : MonoBehaviour {
 
     void CleanTutorial(int tutorial)
     {
+        FloorTileController[] tiles = GameObject.Find("FloorTiles").transform.GetComponentsInChildren<FloorTileController>();
+        for (int i = 0; i < tiles.Length; i++)
+        {
+            tiles[i].Heal();
+        }
         switch (tutorial)
         {
             case 0: break;
@@ -84,6 +96,9 @@ public class TutorialManager : MonoBehaviour {
                 break;
             case 2:
                 Tutorial2(true);
+                break;
+            case 3:
+                Tutorial3(true);
                 break;
             default:
                 Debug.LogError("Tutorial " + tutorial + " can't be cleaned because it doesn't exists");
@@ -101,6 +116,9 @@ public class TutorialManager : MonoBehaviour {
             case 2:
                 Tutorial2();
                 break;
+            case 3:
+                Tutorial3();
+                break;
             default:
                 Debug.LogError("Tutorial " + tutorial + " doesn't exists");
                 break;
@@ -116,7 +134,7 @@ public class TutorialManager : MonoBehaviour {
             "Draw your way to the objective",
             "You can draw until the top pink bar depletes",
             "Avoid damaging your garden by falling off",
-            "You can skip through the tutorials with the top right controls"
+            "You can skip through the tutorials with the top controls"
         });
         tutorialTitle.text = "1/" + TOTAL_TUTORIALS + " RUNNING";
         player.transform.position = layouts[0].transform.Find("StartPosition").position;
@@ -132,7 +150,7 @@ public class TutorialManager : MonoBehaviour {
     {
         dialog.SetSlides(new string[] {
             "You can jump with the jump button in the bottom left corner",
-            "Try to reach your objective by jumping and double jumping while running",
+            "Try to reach your objective by (double) jumping while running",
             "Avoid at all costs damaging your garden"
         });
         tutorialTitle.text = "2/" + TOTAL_TUTORIALS + " JUMPING";
@@ -143,5 +161,37 @@ public class TutorialManager : MonoBehaviour {
         overdriveBar.SetActive(clean);
         layouts[1].SetActive(!clean);
         player.maxPathDistance = clean ? originalMaxPathDistance : 50;
+    }
+
+    void Tutorial3(bool clean = false)
+    {
+        dialog.SetSlides(new string[] {
+            "This frogs are trying to destroy your garden",
+            "If they destroy all of your garden tiles, you loose",
+            "You can attack them with the bottom right button",
+            "When you attack, you also cure the garden tile below you",
+            "Every time you kill a frog, your pink bar increases",
+        });
+        tutorialTitle.text = "3/" + TOTAL_TUTORIALS + " ATTACKING";
+        player.transform.position = layouts[2].transform.Find("StartPosition").position;
+        player.ResetPath();
+        overdriveBar.SetActive(clean);
+        layouts[2].SetActive(!clean);
+
+        if (!clean) // Resurrect enemies
+        {
+            EnemyHealth[] enemiesHealth = layouts[2].GetComponentsInChildren<EnemyHealth>();
+            TutorialEnemy[] enemiesMovement = layouts[2].GetComponentsInChildren<TutorialEnemy>();
+            for (int i = 0; i < enemiesHealth.Length; i++)
+            {
+                enemiesHealth[i].dead = false;
+                enemiesMovement[i].Continue();
+            }
+        }
+        //Destroy some tiles
+        FloorTileController[] tiles = GameObject.Find("FloorTiles").transform.GetComponentsInChildren<FloorTileController>();
+        for (int i = 1; i <= 5; i++) {
+            tiles[i].Damage();
+        }
     }
 }

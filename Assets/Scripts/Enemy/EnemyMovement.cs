@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour {
 
-    UnityEngine.AI.NavMeshAgent nav;
+    protected UnityEngine.AI.NavMeshAgent nav;
     static Vector3[] floorTiles;
 
     void Awake()
@@ -27,7 +27,7 @@ public class EnemyMovement : MonoBehaviour {
         }
     }
 
-    public void Stop()
+    public virtual void Stop()
     {
         nav.isStopped = true;
         enabled = false;
