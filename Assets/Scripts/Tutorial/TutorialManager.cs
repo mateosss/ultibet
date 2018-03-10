@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class TutorialManager : MonoBehaviour {
 
-    int TOTAL_TUTORIALS = 3;
+    int TOTAL_TUTORIALS = 4;
 
     [Header("Objects")]
     public Text tutorialTitle;
@@ -27,6 +27,7 @@ public class TutorialManager : MonoBehaviour {
     float originalOverdriveBPS;
 
     float originalMaxPathDistance;
+    float originalMaxOverdriveDistance;
 
     private void Awake()
     {
@@ -35,6 +36,7 @@ public class TutorialManager : MonoBehaviour {
         originalRangeBPS = player.rangeBPS;
         originalOverdriveBPS = player.overdriveBPS;
         originalMaxPathDistance = player.maxPathDistance;
+        originalMaxOverdriveDistance = player.maxOverdriveDistance;
 
         player.cooldownBPS = 0f; // By default this stats are deactivated, should be activated on tutorial method, and reseted to 0
         player.rangeBPS = 0f;
@@ -100,6 +102,9 @@ public class TutorialManager : MonoBehaviour {
             case 3:
                 Tutorial3(true);
                 break;
+            case 4:
+                Tutorial4(true);
+                break;
             default:
                 Debug.LogError("Tutorial " + tutorial + " can't be cleaned because it doesn't exists");
                 break;
@@ -118,6 +123,9 @@ public class TutorialManager : MonoBehaviour {
                 break;
             case 3:
                 Tutorial3();
+                break;
+            case 4:
+                Tutorial4();
                 break;
             default:
                 Debug.LogError("Tutorial " + tutorial + " doesn't exists");
@@ -192,6 +200,37 @@ public class TutorialManager : MonoBehaviour {
         FloorTileController[] tiles = GameObject.Find("FloorTiles").transform.GetComponentsInChildren<FloorTileController>();
         for (int i = 1; i <= 5; i++) {
             tiles[i].Damage();
+        }
+    }
+
+    void Tutorial4(bool clean = false)
+    {
+        dialog.SetSlides(new string[] {
+            "When you move, you charge the yellow bar",
+            "When it's full and you're still, your overdrive phase will start",
+            "While overdriving, you can go to any place in the map instantly",
+            "Also, you heal tiles and kill the enemies that you pass by",
+            "Try to clean out the map",
+        });
+        tutorialTitle.text = "4/" + TOTAL_TUTORIALS + " OVERDRIVING";
+        player.transform.position = layouts[3].transform.Find("StartPosition").position;
+        player.ResetPath();
+        layouts[3].SetActive(!clean);
+        player.maxPathDistance = clean ? originalMaxPathDistance : 50;
+        player.overdriveBPS = clean ? 0 : 0.5f;
+        player.maxOverdriveDistance = clean ? originalMaxOverdriveDistance : 300;
+
+        if (player.overdriving) player.SetOverdrive(false);
+
+        if (!clean) // Resurrect enemies
+        {
+            EnemyHealth[] enemiesHealth = layouts[3].GetComponentsInChildren<EnemyHealth>();
+            TutorialEnemy[] enemiesMovement = layouts[3].GetComponentsInChildren<TutorialEnemy>();
+            for (int i = 0; i < enemiesHealth.Length; i++)
+            {
+                enemiesHealth[i].dead = false;
+                enemiesMovement[i].Continue();
+            }
         }
     }
 }

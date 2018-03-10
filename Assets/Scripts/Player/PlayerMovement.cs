@@ -227,7 +227,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void SetOverdrive(bool active)
+    public void SetOverdrive(bool active)
     {
         overdriving = active;
         if (active)

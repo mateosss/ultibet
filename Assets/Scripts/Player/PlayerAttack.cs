@@ -35,7 +35,7 @@ public class PlayerAttack : MonoBehaviour {
     {
         CooldownTimer += Time.deltaTime;
         
-        if (impactTimer >= impactTime) // attackCollider time of presence
+        if (impactTimer >= impactTime && !playerMovement.overdriving) // attackCollider time of presence
         {
             impactTimer = 0f;
             attackCollider.enabled = false;

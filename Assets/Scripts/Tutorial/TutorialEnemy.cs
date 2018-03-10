@@ -13,7 +13,7 @@ public class TutorialEnemy : EnemyMovement {
 
     void Update()
     {
-        if (nav.remainingDistance <= nav.stoppingDistance)
+        if (floorTiles.Length > 0 && nav.remainingDistance <= nav.stoppingDistance)
         {
             nav.SetDestination(floorTiles[step].position);
             step = (step + 1) % floorTiles.Length;
