@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour {
         GameOver();
     }
 
-    void GameOver()
+    public void GameOver()
     {
         sound.Play();
         music.volume = 0.5f;

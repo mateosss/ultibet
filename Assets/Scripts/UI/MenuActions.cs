@@ -25,5 +25,4 @@ public class MenuActions : MonoBehaviour {
         SceneManager.LoadScene("MainMenu");
         AudioManager.instance.CleanManager();
     }
-
 }
