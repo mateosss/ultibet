@@ -3933,6 +3933,7 @@ GameObject:
   - component: {fileID: 66502363}
   - component: {fileID: 66502362}
   - component: {fileID: 66502365}
+  - component: {fileID: 66502366}
   m_Layer: 0
   m_Name: MenuCanvas
   m_TagString: Untagged
@@ -4030,6 +4031,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02cb7fc4730d63340833464d60bd39d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &66502366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 66502360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7817f829b1ebca469d3a49b15b8597f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groupName: MenuSounds
+  clips:
+  - {fileID: 8300000, guid: 8f71f9d111670334796aee4ddc4dbab8, type: 3}
 --- !u!1 &73124783
 GameObject:
   m_ObjectHideFlags: 0
@@ -5974,7 +5989,7 @@ RectTransform:
   m_GameObject: {fileID: 637414043}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0.00005340576}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 1251000717}
   m_RootOrder: 2
@@ -5982,7 +5997,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -32, y: -32}
-  m_SizeDelta: {x: 92, y: 92}
+  m_SizeDelta: {x: 184, y: 184}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &637414045
 MonoBehaviour:
@@ -6023,8 +6038,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: Exit
+      - m_Target: {fileID: 1904417313}
+        m_MethodName: GameOver
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6055,7 +6070,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 31827a4d89b1e564ca254b5c820e4564, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d6ebd3ef4bfb7a54cb8628876c15fda1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -13453,7 +13468,6 @@ GameObject:
   - component: {fileID: 1629204571}
   - component: {fileID: 1629204570}
   - component: {fileID: 1629204569}
-  - component: {fileID: 1629204572}
   m_Layer: 0
   m_Name: Play
   m_TagString: Untagged
@@ -13565,20 +13579,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1629204567}
---- !u!114 &1629204572
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1629204567}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7817f829b1ebca469d3a49b15b8597f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  groupName: RestartSound
-  clips:
-  - {fileID: 8300000, guid: 8f71f9d111670334796aee4ddc4dbab8, type: 3}
 --- !u!1 &1697189109
 GameObject:
   m_ObjectHideFlags: 0

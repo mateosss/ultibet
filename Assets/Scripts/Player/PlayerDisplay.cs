@@ -37,7 +37,8 @@ public class PlayerDisplay : MonoBehaviour {
         floorAttackParticlesTransform.position = new Vector3(gameObject.transform.position.x, floorAttackParticlesTransform.position.y, gameObject.transform.position.z);
         ParticleSystem.ShapeModule shape = floorParticlesOnAttack.shape;
         shape.scale = new Vector3(playerAttack.range, playerAttack.range, 0);
-        swordParticlesOnAttack.startSize = playerAttack.range;
+        ParticleSystem.MainModule main = swordParticlesOnAttack.main;
+        main.startSize = playerAttack.range;
         floorParticlesOnAttack.Play();
         swordParticlesOnAttack.Play();
         anim.SetTrigger("Attack");
