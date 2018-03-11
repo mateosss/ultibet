@@ -4,12 +4,13 @@ using UnityEngine.SceneManagement;
 
 public class TutorialManager : MonoBehaviour {
 
-    int TOTAL_TUTORIALS = 4;
+    int TOTAL_TUTORIALS = 6;
 
     [Header("Objects")]
     public Text tutorialTitle;
     public TutorialDialog dialog;
     public PlayerMovement player;
+    public TutorialRestartOnFell playerRestartOnFell;
     public GameObject pathBar;
     public GameObject overdriveBar;
     public GameObject jumpButton;
@@ -20,11 +21,13 @@ public class TutorialManager : MonoBehaviour {
     [Header("Tutorial Layouts")]
     public GameObject[] layouts;
 
+    RandomSound winSound;
+
     int currentTutorial = 1;
 
+    float originalOverdriveBPS;
     float originalCooldownBPS;
     float originalRangeBPS;
-    float originalOverdriveBPS;
 
     float originalMaxPathDistance;
     float originalMaxOverdriveDistance;
@@ -32,9 +35,12 @@ public class TutorialManager : MonoBehaviour {
     private void Awake()
     {
         if (layouts.Length != TOTAL_TUTORIALS) Debug.LogError("Different amount of tutorials and layouts");
+
+        winSound = GetComponent<RandomSound>();
+
+        originalOverdriveBPS = player.overdriveBPS;
         originalCooldownBPS = player.cooldownBPS;
         originalRangeBPS = player.rangeBPS;
-        originalOverdriveBPS = player.overdriveBPS;
         originalMaxPathDistance = player.maxPathDistance;
         originalMaxOverdriveDistance = player.maxOverdriveDistance;
 
@@ -61,6 +67,12 @@ public class TutorialManager : MonoBehaviour {
     public void ExitTutorial()
     {
         SceneManager.LoadScene("MainMenu");
+    }
+
+    public void WinTutorial()
+    {
+        winSound.Play();
+        NextTutorial();
     }
 
     public void PreviousTutorial()
@@ -105,6 +117,12 @@ public class TutorialManager : MonoBehaviour {
             case 4:
                 Tutorial4(true);
                 break;
+            case 5:
+                Tutorial5(true);
+                break;
+            case 6:
+                Tutorial6(true);
+                break;
             default:
                 Debug.LogError("Tutorial " + tutorial + " can't be cleaned because it doesn't exists");
                 break;
@@ -126,6 +144,12 @@ public class TutorialManager : MonoBehaviour {
                 break;
             case 4:
                 Tutorial4();
+                break;
+            case 5:
+                Tutorial5();
+                break;
+            case 6:
+                Tutorial6();
                 break;
             default:
                 Debug.LogError("Tutorial " + tutorial + " doesn't exists");
@@ -232,5 +256,42 @@ public class TutorialManager : MonoBehaviour {
                 enemiesMovement[i].Continue();
             }
         }
+    }
+
+    void Tutorial5(bool clean = false)
+    {
+        dialog.SetSlides(new string[] {
+            "You're almost ready, but there's one more thing that you should know",
+            "As you go running without falling, you attack becomes more powerful",
+            "Your attack range increases, and the cooldown for it diminish",
+            "Make a long stroke, and see how your attack improves",
+            "Try to kill that frog that is out of your normal range",
+            "And that's it, you can review all the tutorials as you please"
+        });
+        tutorialTitle.text = "5/" + TOTAL_TUTORIALS + " EMPOWERING";
+        player.transform.position = layouts[4].transform.Find("StartPosition").position;
+        player.ResetPath();
+        layouts[4].SetActive(!clean);
+        player.maxPathDistance = clean ? originalMaxPathDistance : 300;
+        overdriveBar.SetActive(clean);
+        player.cooldownBPS = clean ? 0 : originalCooldownBPS;
+        player.rangeBPS = clean ? 0 : originalRangeBPS;
+
+    }
+
+    void Tutorial6(bool clean = false)
+    {
+        dialog.SetSlides(new string[] {
+            "Free Training",
+        });
+        tutorialTitle.text = "6/" + TOTAL_TUTORIALS + " TRAINING";
+        player.transform.position = layouts[4].transform.Find("StartPosition").position;
+        player.ResetPath();
+        layouts[5].SetActive(!clean);
+        player.maxPathDistance = clean ? originalMaxPathDistance : 300;
+        player.overdriveBPS = clean ? 0 : originalOverdriveBPS;
+        player.cooldownBPS = clean ? 0 : originalCooldownBPS;
+        player.rangeBPS = clean ? 0 : originalRangeBPS;
+        playerRestartOnFell.enabled = clean;
     }
 }

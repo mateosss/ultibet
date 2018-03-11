@@ -3,6 +3,12 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour {
 
+    RandomSound sound;
+
+    private void Awake()
+    {
+        sound = GetComponent<RandomSound>();
+    }
 
     public void Play()
     {
@@ -12,11 +18,13 @@ public class MainMenu : MonoBehaviour {
 
     public void Tutorial()
     {
+        sound.Play();
         SceneManager.LoadScene("Tutorial");
     }
 
     public void Exit()
     {
+        sound.Play();
         Application.Quit();
     }
 }

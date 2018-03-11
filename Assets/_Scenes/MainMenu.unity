@@ -700,6 +700,7 @@ GameObject:
   - component: {fileID: 1065440410}
   - component: {fileID: 1065440409}
   - component: {fileID: 1065440413}
+  - component: {fileID: 1065440414}
   m_Layer: 0
   m_Name: MenuCanvas
   m_TagString: Untagged
@@ -797,6 +798,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0269ed66199e0a4c8d91986fdd16dbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1065440414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1065440408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7817f829b1ebca469d3a49b15b8597f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groupName: PlayButton
+  clips:
+  - {fileID: 8300000, guid: e3785a0cbb4c6ad4ba31ebef0dd4fad1, type: 3}
 --- !u!1 &1105512654
 GameObject:
   m_ObjectHideFlags: 0
