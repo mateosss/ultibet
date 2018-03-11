@@ -161,12 +161,10 @@ public class TutorialManager : MonoBehaviour {
     {
         dialog.SetSlides(new string[] {
             "You're a monk and this is your garden",
-            "You must keep it intact",
-            "Let's learn the controls for that",
+            "You must keep it intact, now let's try to move around",
             "Draw your way to the objective",
             "You can draw until the top pink bar depletes",
             "Avoid damaging your garden by falling off",
-            "You can skip through the tutorials with the top controls"
         });
         tutorialTitle.text = "1/" + TOTAL_TUTORIALS + " RUNNING";
         player.transform.position = layouts[0].transform.Find("StartPosition").position;
@@ -262,7 +260,7 @@ public class TutorialManager : MonoBehaviour {
     {
         dialog.SetSlides(new string[] {
             "You're almost ready, but there's one more thing that you should know",
-            "As you go running without falling, you attack becomes more powerful",
+            "As you go running without falling, your attack becomes more powerful",
             "Your attack range increases, and the cooldown for it diminish",
             "Make a long stroke, and see how your attack improves",
             "Try to kill that frog that is out of your normal range",
