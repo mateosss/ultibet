@@ -4,11 +4,13 @@ using UnityEngine.UI;
 public class Highscore : MonoBehaviour {
 
     static Text highscoreText;
+    static Text scoreText;
     static string defaultText;
     static int highscore;
     
 	void Awake () {
         highscoreText = GetComponent<Text>();
+        scoreText = GameObject.Find("Score").GetComponent<Text>();
         defaultText = highscoreText.text;
         highscore = PlayerPrefs.GetInt("Highscore", 0);
         highscoreText.text = defaultText + highscore.ToString();
@@ -16,6 +18,7 @@ public class Highscore : MonoBehaviour {
 
     public static void SetHighscore(int score)
     {
+        scoreText.text = score.ToString();
         if (score > highscore)
         {
             PlayerPrefs.SetInt("Highscore", score);
