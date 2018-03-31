@@ -274,7 +274,16 @@ public class TutorialManager : MonoBehaviour {
         overdriveBar.SetActive(clean);
         player.cooldownBPS = clean ? 0 : originalCooldownBPS;
         player.rangeBPS = clean ? 0 : originalRangeBPS;
-
+        if (!clean) // Resurrect enemies
+        {
+            EnemyHealth[] enemiesHealth = layouts[4].GetComponentsInChildren<EnemyHealth>();
+            TutorialEnemy[] enemiesMovement = layouts[4].GetComponentsInChildren<TutorialEnemy>();
+            for (int i = 0; i < enemiesHealth.Length; i++)
+            {
+                enemiesHealth[i].dead = false;
+                enemiesMovement[i].Continue();
+            }
+        }
     }
 
     void Tutorial6(bool clean = false)
