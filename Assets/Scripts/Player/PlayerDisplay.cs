@@ -49,6 +49,16 @@ public class PlayerDisplay : MonoBehaviour {
         anim.SetTrigger("Dash");
     }
 
+    public void OverdriveOn()
+    {
+        anim.SetTrigger("OverdriveOn");
+    }
+
+    public void OverdriveOff()
+    {
+        anim.SetTrigger("OverdriveOff");
+    }
+
     public void Still()
     {
         anim.SetBool("Running", false);

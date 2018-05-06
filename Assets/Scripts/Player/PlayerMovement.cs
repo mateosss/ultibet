@@ -236,6 +236,7 @@ public class PlayerMovement : MonoBehaviour
             playerMaterial.mainTexture = overdriveSkin;
             overdriveSound.Play();
             overdriveVignette.SetTrigger("OverdriveOn");
+            playerDisplay.OverdriveOn();
             hudAnim.SetTrigger("OverdriveOn");
         }
         else
@@ -245,6 +246,7 @@ public class PlayerMovement : MonoBehaviour
             endOverdrive = false;
             playerMaterial.mainTexture = defaultSkin;
             overdriveVignette.SetTrigger("OverdriveOff");
+            playerDisplay.OverdriveOff();
             hudAnim.SetTrigger("OverdriveOff");
         }
     }

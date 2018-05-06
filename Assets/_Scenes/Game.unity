@@ -6487,6 +6487,16 @@ Prefab:
       propertyPath: displayObject
       value: 
       objectReference: {fileID: 246462647}
+    - target: {fileID: 114078573341881666, guid: bbd68a18c33d2914685c195a38485499,
+        type: 2}
+      propertyPath: overdriveBPS
+      value: 0.06
+      objectReference: {fileID: 0}
+    - target: {fileID: 114078573341881666, guid: bbd68a18c33d2914685c195a38485499,
+        type: 2}
+      propertyPath: isLongPathFrom
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bbd68a18c33d2914685c195a38485499, type: 2}
   m_IsPrefabParent: 0
