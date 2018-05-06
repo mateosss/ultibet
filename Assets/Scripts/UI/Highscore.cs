@@ -10,7 +10,8 @@ public class Highscore : MonoBehaviour {
     
 	void Awake () {
         highscoreText = GetComponent<Text>();
-        scoreText = GameObject.Find("Score").GetComponent<Text>();
+        GameObject scoreObject = GameObject.Find("Score");
+        if (scoreObject != null) scoreText = scoreObject.GetComponent<Text>();
         defaultText = highscoreText.text;
         highscore = PlayerPrefs.GetInt("Highscore", 0);
         highscoreText.text = defaultText + highscore.ToString();
@@ -18,7 +19,7 @@ public class Highscore : MonoBehaviour {
 
     public static void SetHighscore(int score)
     {
-        scoreText.text = score.ToString();
+        if (scoreText != null) scoreText.text = score.ToString();
         if (score > highscore)
         {
             PlayerPrefs.SetInt("Highscore", score);
