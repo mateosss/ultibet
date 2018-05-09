@@ -42,4 +42,19 @@ public class MainMenu : MonoBehaviour {
         for (int i = 0; i < showOnCredits.Length; i++) showOnCredits[i].SetActive(showingCredits);
         for (int i = 0; i < hideOnCredits.Length; i++) hideOnCredits[i].SetActive(!showingCredits);
     }
+
+    public void LinkMayo()
+    {
+        Application.OpenURL("https://mateosss.github.io/");
+    }
+
+    public void LinkRenzo()
+    {
+        Application.OpenURL("https://www.artstation.com/renzosartore");
+    }
+
+    public void LinkJose()
+    {
+        Application.OpenURL("https://www.artstation.com/joseluna");
+    }
 }
