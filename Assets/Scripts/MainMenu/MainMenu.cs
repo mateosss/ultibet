@@ -2,7 +2,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour {
+    public GameObject[] hideOnCredits;
+    public GameObject[] showOnCredits;
 
+    private bool showingCredits = false;
     RandomSound sound;
 
     private void Awake()
@@ -24,7 +27,19 @@ public class MainMenu : MonoBehaviour {
 
     public void Exit()
     {
-        sound.Play();
-        Application.Quit();
+        if (showingCredits) Credits();
+        else
+        {
+            sound.Play();
+            Application.Quit();
+        }
+    }
+
+    public void Credits()
+    {
+        showingCredits = !showingCredits;
+
+        for (int i = 0; i < showOnCredits.Length; i++) showOnCredits[i].SetActive(showingCredits);
+        for (int i = 0; i < hideOnCredits.Length; i++) hideOnCredits[i].SetActive(!showingCredits);
     }
 }
