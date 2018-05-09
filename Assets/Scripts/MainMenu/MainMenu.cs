@@ -37,6 +37,7 @@ public class MainMenu : MonoBehaviour {
 
     public void Credits()
     {
+        sound.Play();
         showingCredits = !showingCredits;
 
         for (int i = 0; i < showOnCredits.Length; i++) showOnCredits[i].SetActive(showingCredits);
