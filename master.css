@@ -1,0 +1,54 @@
+@font-face {
+  font-family: "Multicolore";
+  src: url("Multicolore.otf") format("opentype");
+}
+
+* {
+  font-family: 'Multicolore', Arial, sans-serif;
+}
+
+a.mrjlogo {
+  position: fixed;
+  width: 16vmin;
+  bottom: 1rem;
+  right: 1rem;
+}
+
+a.mrjlogo img {
+  width: 100%;
+}
+
+img.title {
+  width: 60vmin;
+  position: fixed;
+  left: calc((100vw - 60vmin) / 2);
+  top: 4rem;
+}
+
+iframe.youtube-video {
+  border-radius: 1rem;
+  box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+  width: 80vmin;
+  height: 45vmin;
+  position: fixed;
+  left: calc((100vw - 80vmin) / 2);
+  top: calc(4rem + 26vmin);
+}
+
+a.download-button img {
+  box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+  width: 32vmin;
+  position: fixed;
+  left: calc((100vw - 32vmin) / 2);
+  top: calc(4rem + 26vmin + 45vmin + 4rem);
+  transition: 0.2s;
+}
+
+a.download-button img:hover {
+  box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+  top: calc(4rem + 26vmin + 45vmin + 4rem - 0.4rem);
+}
+
+body {
+  background-color: #2a2939;
+}
